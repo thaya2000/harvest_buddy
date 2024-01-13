@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/login_page.dart';
+import 'package:harvest_buddy/widgets/high_rated_card.dart';
 import 'constant.dart';
 import 'signup_page.dart';
 
@@ -25,11 +26,16 @@ class _HomePageState extends State<HomePage> {
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60), // Set a fully opaque color
     );
+    TextStyle h1style = TextStyle(
+      fontSize: 20.0,
+      fontWeight: FontWeight.bold,
+      color: Color.fromARGB(255, 0, 60, 60), // Set a fully opaque color
+    );
 
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: true,
-      backgroundColor: Color.fromARGB(255, 0, 200, 200),
+      // backgroundColor: Color.fromARGB(255, 0, 200, 200),
       body: SingleChildScrollView(
         child: Form(
           key: formKey,
@@ -37,15 +43,52 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Stack(
+              Container(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30, top: 50),
+                  child: Text(
+                    "Welcome Thayanan!",
+                    style: appNameStyle,
+                  ),
+                ),
+              ),
+              Column(
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(left: 35, top: 50),
+                    padding: const EdgeInsets.only(left: 30, top: 50),
                     child: Text(
-                      "Welcome Thayanan!",
-                      style: appNameStyle,
+                      "High Rated Harvesters",
+                      style: h1style,
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: <Widget>[
+                          NewWidget(
+                              height: height * 0.1,
+                              width: width * 0.3,
+                              harvesterName: "Vithu Harvesters"),
+                          NewWidget(
+                              height: height * 0.1,
+                              width: width * 0.3,
+                              harvesterName: "Vyshuu Harvesters"),
+                          NewWidget(
+                              height: height * 0.1,
+                              width: width * 0.3,
+                              harvesterName: "Thaya Harvesters"),
+                          NewWidget(
+                              height: height * 0.1,
+                              width: width * 0.3,
+                              harvesterName: "Rishi Harvesters"),
+
+                          // Add more NewWidget widgets as needed
+                        ],
+                      ),
+                    ),
+                  )
                 ],
               ),
             ],
@@ -54,6 +97,7 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.transparent,
+        color: Color.fromARGB(255, 0, 200, 200),
         items: <Widget>[
           Icon(Icons.home, size: 30),
           Icon(Icons.search, size: 30),

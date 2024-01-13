@@ -20,3 +20,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/bg.png
+    - assets/harvester_icon.png
+    - assets/harvester_icon_2.png
