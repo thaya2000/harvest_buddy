@@ -91,6 +91,45 @@ class _HomePageState extends State<HomePage> {
                   )
                 ],
               ),
+              Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30, top: 20),
+                    child: Text(
+                      "Best Price Harvesters",
+                      style: h1style,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: <Widget>[
+                          NewWidget(
+                              height: height * 0.1,
+                              width: width * 0.3,
+                              harvesterName: "Vithu Harvesters"),
+                          NewWidget(
+                              height: height * 0.1,
+                              width: width * 0.3,
+                              harvesterName: "Vyshuu Harvesters"),
+                          NewWidget(
+                              height: height * 0.1,
+                              width: width * 0.3,
+                              harvesterName: "Thaya Harvesters"),
+                          NewWidget(
+                              height: height * 0.1,
+                              width: width * 0.3,
+                              harvesterName: "Rishi Harvesters"),
+
+                          // Add more NewWidget widgets as needed
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ],
           ),
         ),
