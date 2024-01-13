@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'home_page.dart';
+import 'constant.dart';
+import 'landing_page.dart';
+import 'login_page.dart';
+import 'signup_page.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(InitialScreen());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
+class InitialScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello Moon!'),
-        ),
-      ),
+    return MaterialApp(
+      home: HomePage(),
+      title: "HarvestBuddy",
+      debugShowCheckedModeBanner: false,
     );
   }
 }
