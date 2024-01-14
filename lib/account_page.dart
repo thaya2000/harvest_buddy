@@ -41,7 +41,7 @@ class _LoginScreenState extends State<AccountPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top: 180.0),
+                padding: const EdgeInsets.only(top: 200.0),
                 child: Center(
                   child: Column(
                     children: [
