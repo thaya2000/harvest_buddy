@@ -69,7 +69,7 @@ class _LoginScreenState extends State<EditAccount> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(top: 50.0),
+                  padding: const EdgeInsets.only(top: 0.0),
                   child: Center(
                     child: Column(
                       children: [

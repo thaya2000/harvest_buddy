@@ -18,9 +18,11 @@ class _LoginScreenState extends State<SignUpScreen> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
+    bool isChecked = false;
+
     // Define text styles
     TextStyle appNameStyle = TextStyle(
-      fontSize: 45.0,
+      fontSize: 35.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60),
     );
@@ -56,9 +58,22 @@ class _LoginScreenState extends State<SignUpScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 35),
-                      child: Text(
-                        "Create account!",
-                        style: appNameStyle,
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Create",
+                              style: appNameStyle,
+                            ),
+                            TextSpan(
+                              text: "\n", // Add a line break
+                            ),
+                            TextSpan(
+                              text: "account!",
+                              style: appNameStyle,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -234,12 +249,19 @@ class _LoginScreenState extends State<SignUpScreen> {
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {},
-                  child: Text("Forgot password?"),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Checkbox(
+                    value: isChecked,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        isChecked = value!;
+                      });
+                    },
+                  ),
+                  Text('Create account as Service Provider'),
+                ],
               ),
               Center(
                 child: Container(

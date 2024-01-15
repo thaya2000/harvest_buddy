@@ -14,11 +14,17 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  TextEditingController locationController = TextEditingController();
+  DateTime? selectedDate;
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+
+    TextEditingController dateController = TextEditingController();
+    FocusNode locationFocusNode = FocusNode();
+    FocusNode dateFocusNode = FocusNode();
 
     // Define text styles
     TextStyle appNameStyle = TextStyle(
@@ -52,17 +58,143 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () {
+                        // Remove focus when tapping outside the input fields
+                        locationFocusNode.unfocus();
+                        dateFocusNode.unfocus();
+                      },
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Container(
+                              height: height * 0.08,
+                              width: width * 0.9,
+                              child: Material(
+                                elevation: 0.0,
+                                child: TextField(
+                                  controller: locationController,
+                                  focusNode: locationFocusNode,
+                                  decoration: InputDecoration(
+                                    labelText: 'Enter Your Paddy Land Location',
+                                    suffixIcon: Icon(Icons.location_on),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      borderSide:
+                                          BorderSide(color: Colors.grey),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      borderSide:
+                                          BorderSide(color: Colors.blue),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Container(
+                              height: height * 0.08,
+                              width: width * 0.9,
+                              child: Material(
+                                elevation: 0.0,
+                                child: TextFormField(
+                                  controller: dateController,
+                                  readOnly: true,
+                                  focusNode: dateFocusNode,
+                                  onTap: () async {
+                                    dateFocusNode
+                                        .unfocus(); // Unfocus location field when date field is tapped
+                                    DateTime? pickedDate = await showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime.now(),
+                                      lastDate: DateTime.now()
+                                          .add(Duration(days: 365)),
+                                    );
+
+                                    if (pickedDate != null &&
+                                        pickedDate != DateTime.now()) {
+                                      String formattedDate =
+                                          "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
+                                      dateController.text = formattedDate;
+                                    }
+                                  },
+                                  decoration: InputDecoration(
+                                    labelText: "Date",
+                                    suffixIcon: Icon(Icons.calendar_today),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      borderSide:
+                                          BorderSide(color: Colors.grey),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      borderSide:
+                                          BorderSide(color: Colors.blue),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Center(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          child: TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              "Search harvester",
+                              style: TextStyle(
+                                color:
+                                    Colors.white, // Set the text color to white
+                              ),
+                            ),
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15)),
+                                ),
+                              ),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors
+                                    .red, // Set the color without transparency
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(left: 30, top: 50),
+                    padding: const EdgeInsets.only(left: 30, top: 20),
                     child: Text(
                       "High Rated Harvesters",
                       style: h1style,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(10),
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
@@ -92,16 +224,18 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(left: 30, top: 20),
+                    padding: const EdgeInsets.only(left: 30, top: 10),
                     child: Text(
                       "Best Price Harvesters",
                       style: h1style,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(10),
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
