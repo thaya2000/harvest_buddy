@@ -1,6 +1,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:harvest_buddy/account_page.dart';
+import 'package:harvest_buddy/activity_page.dart';
 import 'package:harvest_buddy/login_page.dart';
+import 'package:harvest_buddy/schedule_page.dart';
+import 'package:harvest_buddy/search_harvester_page.dart';
 import 'package:harvest_buddy/widgets/high_rated_card.dart';
 import 'constant.dart';
 import 'signup_page.dart';
@@ -13,6 +17,47 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
+
+  final List<Widget> _pages = [
+    HomePageContent(),
+    SchedulePage(),
+    ActivityScreen(),
+    AccountPage(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+      extendBody: true,
+      resizeToAvoidBottomInset: true,
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _pages,
+      ),
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.transparent,
+        color: Color.fromARGB(255, 0, 200, 200),
+        items: <Widget>[
+          Icon(Icons.home, size: 30),
+          Icon(Icons.event, size: 30),
+          Icon(Icons.list, size: 30),
+          Icon(Icons.person, size: 30),
+        ],
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+      ),
+    );
+  }
+}
+
+class HomePageContent extends StatelessWidget {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController locationController = TextEditingController();
   DateTime? selectedDate;
@@ -38,248 +83,231 @@ class _HomePageState extends State<HomePage> {
       color: Color.fromARGB(255, 0, 60, 60), // Set a fully opaque color
     );
 
-    return Scaffold(
-      extendBody: true,
-      resizeToAvoidBottomInset: true,
-      // backgroundColor: Color.fromARGB(255, 0, 200, 200),
-      body: SingleChildScrollView(
-        child: Form(
-          key: formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 30, top: 50),
-                  child: Text(
-                    "Welcome Thayanan!",
-                    style: appNameStyle,
-                  ),
+    return SingleChildScrollView(
+      child: Form(
+        key: formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 30, top: 50),
+                child: Text(
+                  "Welcome Thayanan!",
+                  style: appNameStyle,
                 ),
               ),
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    GestureDetector(
-                      onTap: () {
-                        // Remove focus when tapping outside the input fields
-                        locationFocusNode.unfocus();
-                        dateFocusNode.unfocus();
-                      },
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Container(
-                              height: height * 0.08,
-                              width: width * 0.9,
-                              child: Material(
-                                elevation: 0.0,
-                                child: TextField(
-                                  controller: locationController,
-                                  focusNode: locationFocusNode,
-                                  decoration: InputDecoration(
-                                    labelText: 'Enter Your Paddy Land Location',
-                                    suffixIcon: Icon(Icons.location_on),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                      borderSide:
-                                          BorderSide(color: Colors.grey),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                      borderSide:
-                                          BorderSide(color: Colors.blue),
-                                    ),
+            ),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
+                      // Remove focus when tapping outside the input fields
+                      locationFocusNode.unfocus();
+                      dateFocusNode.unfocus();
+                    },
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Container(
+                            height: height * 0.08,
+                            width: width * 0.9,
+                            child: Material(
+                              elevation: 0.0,
+                              child: TextField(
+                                controller: locationController,
+                                focusNode: locationFocusNode,
+                                decoration: InputDecoration(
+                                  labelText: 'Enter Your Paddy Land Location',
+                                  suffixIcon: Icon(Icons.location_on),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    borderSide: BorderSide(color: Colors.grey),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    borderSide: BorderSide(color: Colors.blue),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                              height: height * 0.08,
-                              width: width * 0.9,
-                              child: Material(
-                                elevation: 0.0,
-                                child: TextFormField(
-                                  controller: dateController,
-                                  readOnly: true,
-                                  focusNode: dateFocusNode,
-                                  onTap: () async {
-                                    dateFocusNode
-                                        .unfocus(); // Unfocus location field when date field is tapped
-                                    DateTime? pickedDate = await showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime.now(),
-                                      lastDate: DateTime.now()
-                                          .add(Duration(days: 365)),
-                                    );
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            height: height * 0.08,
+                            width: width * 0.9,
+                            child: Material(
+                              elevation: 0.0,
+                              child: TextFormField(
+                                controller: dateController,
+                                readOnly: true,
+                                focusNode: dateFocusNode,
+                                onTap: () async {
+                                  dateFocusNode
+                                      .unfocus(); // Unfocus location field when date field is tapped
+                                  DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime.now(),
+                                    lastDate:
+                                        DateTime.now().add(Duration(days: 365)),
+                                  );
 
-                                    if (pickedDate != null &&
-                                        pickedDate != DateTime.now()) {
-                                      String formattedDate =
-                                          "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
-                                      dateController.text = formattedDate;
-                                    }
-                                  },
-                                  decoration: InputDecoration(
-                                    labelText: "Date",
-                                    suffixIcon: Icon(Icons.calendar_today),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                      borderSide:
-                                          BorderSide(color: Colors.grey),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                      borderSide:
-                                          BorderSide(color: Colors.blue),
-                                    ),
+                                  if (pickedDate != null &&
+                                      pickedDate != DateTime.now()) {
+                                    String formattedDate =
+                                        "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
+                                    dateController.text = formattedDate;
+                                  }
+                                },
+                                decoration: InputDecoration(
+                                  labelText: "Date",
+                                  suffixIcon: Icon(Icons.calendar_today),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    borderSide: BorderSide(color: Colors.grey),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    borderSide: BorderSide(color: Colors.blue),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
-                      child: Center(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.6,
-                          child: TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              "Search harvester",
-                              style: TextStyle(
-                                color:
-                                    Colors.white, // Set the text color to white
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: Center(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchHarvester()),
+                            );
+                          },
+                          child: Text(
+                            "Search harvester",
+                            style: TextStyle(
+                              color:
+                                  Colors.white, // Set the text color to white
+                            ),
+                          ),
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
                               ),
                             ),
-                            style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15)),
-                                ),
-                              ),
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                Colors
-                                    .red, // Set the color without transparency
-                              ),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.red, // Set the color without transparency
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ],
+                  ),
+                ],
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 30, top: 20),
+                  child: Text(
+                    "High Rated Harvesters",
+                    style: h1style,
+                  ),
                 ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 30, top: 20),
-                    child: Text(
-                      "High Rated Harvesters",
-                      style: h1style,
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: <Widget>[
+                        NewWidget(
+                            height: height * 0.1,
+                            width: width * 0.3,
+                            harvesterName: "Vithu Harvesters"),
+                        NewWidget(
+                            height: height * 0.1,
+                            width: width * 0.3,
+                            harvesterName: "Vyshuu Harvesters"),
+                        NewWidget(
+                            height: height * 0.1,
+                            width: width * 0.3,
+                            harvesterName: "Thaya Harvesters"),
+                        NewWidget(
+                            height: height * 0.1,
+                            width: width * 0.3,
+                            harvesterName: "Rishi Harvesters"),
+
+                        // Add more NewWidget widgets as needed
+                      ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: <Widget>[
-                          NewWidget(
-                              height: height * 0.1,
-                              width: width * 0.3,
-                              harvesterName: "Vithu Harvesters"),
-                          NewWidget(
-                              height: height * 0.1,
-                              width: width * 0.3,
-                              harvesterName: "Vyshuu Harvesters"),
-                          NewWidget(
-                              height: height * 0.1,
-                              width: width * 0.3,
-                              harvesterName: "Thaya Harvesters"),
-                          NewWidget(
-                              height: height * 0.1,
-                              width: width * 0.3,
-                              harvesterName: "Rishi Harvesters"),
+                )
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 30, top: 10),
+                  child: Text(
+                    "Best Price Harvesters",
+                    style: h1style,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: <Widget>[
+                        NewWidget(
+                            height: height * 0.1,
+                            width: width * 0.3,
+                            harvesterName: "Vithu Harvesters"),
+                        NewWidget(
+                            height: height * 0.1,
+                            width: width * 0.3,
+                            harvesterName: "Vyshuu Harvesters"),
+                        NewWidget(
+                            height: height * 0.1,
+                            width: width * 0.3,
+                            harvesterName: "Thaya Harvesters"),
+                        NewWidget(
+                            height: height * 0.1,
+                            width: width * 0.3,
+                            harvesterName: "Rishi Harvesters"),
 
-                          // Add more NewWidget widgets as needed
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 30, top: 10),
-                    child: Text(
-                      "Best Price Harvesters",
-                      style: h1style,
+                        // Add more NewWidget widgets as needed
+                      ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: <Widget>[
-                          NewWidget(
-                              height: height * 0.1,
-                              width: width * 0.3,
-                              harvesterName: "Vithu Harvesters"),
-                          NewWidget(
-                              height: height * 0.1,
-                              width: width * 0.3,
-                              harvesterName: "Vyshuu Harvesters"),
-                          NewWidget(
-                              height: height * 0.1,
-                              width: width * 0.3,
-                              harvesterName: "Thaya Harvesters"),
-                          NewWidget(
-                              height: height * 0.1,
-                              width: width * 0.3,
-                              harvesterName: "Rishi Harvesters"),
-
-                          // Add more NewWidget widgets as needed
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
+                )
+              ],
+            ),
+          ],
         ),
-      ),
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.transparent,
-        color: Color.fromARGB(255, 0, 200, 200),
-        items: <Widget>[
-          Icon(Icons.home, size: 30),
-          Icon(Icons.search, size: 30),
-          Icon(Icons.favorite, size: 30),
-          Icon(Icons.person, size: 30),
-        ],
-        onTap: (index) {
-          // Handle item tap
-        },
       ),
     );
   }

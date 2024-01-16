@@ -37,12 +37,68 @@ class _HomePageState extends State<SearchHarvester> {
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(),
+      appBar: AppBar(
+          backgroundColor: Color.fromARGB(
+              255, 0, 120, 120), // Set your desired background color
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft:
+                  Radius.circular(20.0), // Set your desired bottom-left radius
+              bottomRight:
+                  Radius.circular(20.0), // Set your desired bottom-right radius
+            ),
+          ),
+          title: Container(
+            child: Column(
+              children: [
+                Text(
+                  "Mallavi",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  "2024-02-29",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                  ),
+                ),
+              ],
+            ),
+          )),
       body: Center(
         child: Column(
-          children: <Widget>[],
+          children: <Widget>[
+            Container(
+              width: width * 0.6,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 227, 227, 227),
+                  borderRadius: BorderRadius.circular(10.0)),
+              margin: EdgeInsets.all(25),
+              padding: EdgeInsets.all(10),
+              child: Center(child: Text("6 Harvesters found")),
+            ),
+            Column(
+              children: <Widget>[BookingCard()],
+            )
+          ],
         ),
       ),
+    );
+  }
+}
+
+class BookingCard extends StatelessWidget {
+  const BookingCard({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [Text("HII")],
     );
   }
 }
