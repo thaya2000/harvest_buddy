@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:harvest_buddy/home_page.dart';
 import 'package:harvest_buddy/landing_page.dart';
 import 'package:harvest_buddy/signup_page.dart';
 import 'package:harvest_buddy/widgets/my_textfield.dart';
@@ -18,24 +19,59 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   // GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final _emailTextController = TextEditingController();
-  final _passwordTextController = TextEditingController();
+  final _emailTextController =
+      TextEditingController(text: "default1@example.com");
+  final _passwordTextController = TextEditingController(text: "asd123");
 
-  Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailTextController.text.trim(),
-      password: _passwordTextController.text.trim(),
+  void signIn() async {
+    showDialog(
+      context: scaffoldKey.currentContext!,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
     );
-    print("button clicked");
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailTextController.text.trim(),
+        password: _passwordTextController.text.trim(),
+      );
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      genericErrorMessage(e.code);
+    }
   }
 
-  @override
-  void dispose() {
-    _emailTextController.dispose();
-    _passwordTextController.dispose();
-    super.dispose();
+  void genericErrorMessage(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
+
+  // @override
+  // void dispose() {
+  //   _emailTextController.dispose();
+  //   _passwordTextController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     return Scaffold(
+      key: scaffoldKey,
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -115,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.6,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: signIn,
                     child: Text(
                       "Log in",
                       style: TextStyle(
