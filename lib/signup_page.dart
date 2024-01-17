@@ -1,33 +1,75 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/landing_page.dart';
 import 'package:harvest_buddy/login_page.dart';
-import 'constant.dart';
+import 'package:harvest_buddy/widgets/my_textfield.dart';
 
 class SignUpScreen extends StatefulWidget {
-  SignUpScreen({super.key});
+  final Function()? onTap;
+  const SignUpScreen({Key? key, required this.onTap}) : super(key: key);
 
   @override
-  State<SignUpScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
+  final emailController = TextEditingController(text: "default1@example.com");
+  final passwordController = TextEditingController(text: "asd123");
+  final confirmPasswordController = TextEditingController(text: "asd123");
+
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void signUserUp() async {
+    showDialog(
+      context: scaffoldKey.currentContext!,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
+    try {
+      if (passwordController.text == confirmPasswordController.text) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+
+        Navigator.push(
+          scaffoldKey.currentContext!,
+          MaterialPageRoute(builder: (context) => LoginScreen()),
+        );
+      } else {
+        Navigator.pop(context);
+        genericErrorMessage("Password doesn't match!");
+      }
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      genericErrorMessage(e.code);
+    }
+  }
+
+  void genericErrorMessage(String message) {
+    showDialog(
+      context: scaffoldKey.currentContext!,
+      builder: (context) => AlertDialog(
+        title: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-
-    bool isChecked = false;
-
-    // Define text styles
-    TextStyle appNameStyle = TextStyle(
-      fontSize: 35.0,
-      fontWeight: FontWeight.bold,
-      color: Color.fromARGB(255, 0, 60, 60),
-    );
-
     return Scaffold(
+      key: scaffoldKey,
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -45,7 +87,7 @@ class _LoginScreenState extends State<SignUpScreen> {
                     Row(
                       children: [
                         IconButton(
-                          icon: Icon(Icons.arrow_back),
+                          icon: const Icon(Icons.arrow_back),
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -59,18 +101,26 @@ class _LoginScreenState extends State<SignUpScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 35),
                       child: RichText(
-                        text: TextSpan(
+                        text: const TextSpan(
                           children: [
                             TextSpan(
                               text: "Create",
-                              style: appNameStyle,
+                              style: TextStyle(
+                                fontSize: 35.0,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 0, 60, 60),
+                              ),
                             ),
                             TextSpan(
-                              text: "\n", // Add a line break
+                              text: "\n",
                             ),
                             TextSpan(
                               text: "account!",
-                              style: appNameStyle,
+                              style: TextStyle(
+                                fontSize: 35.0,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 0, 60, 60),
+                              ),
                             ),
                           ],
                         ),
@@ -84,166 +134,17 @@ class _LoginScreenState extends State<SignUpScreen> {
                 child: Container(
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 15.0, right: 15, bottom: 10),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(25.0)),
-                            ),
-
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 10.0,
-                                horizontal:
-                                    15.0), // Adjust these values as needed
-
-                            labelText: "First Name",
-                            labelStyle: TextStyle(
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
+                      InputText(
+                        controller: emailController,
+                        labelText: "Username or email",
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 15.0, right: 15, bottom: 10),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(25.0)),
-                            ),
-
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 10.0,
-                                horizontal:
-                                    20.0), // Adjust these values as needed
-
-                            labelText: "Last Name",
-                            labelStyle: TextStyle(
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
+                      InputText(
+                        controller: passwordController,
+                        labelText: "Password",
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 15.0, right: 15, bottom: 10),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(25.0)),
-                            ),
-
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 10.0,
-                                horizontal:
-                                    20.0), // Adjust these values as needed
-
-                            labelText: "Address",
-                            labelStyle: TextStyle(
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 15.0, right: 15, bottom: 10),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(25.0)),
-                            ),
-
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 10.0,
-                                horizontal:
-                                    20.0), // Adjust these values as needed
-
-                            labelText: "NIC Number",
-                            labelStyle: TextStyle(
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 15.0, right: 15, bottom: 10),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(25.0)),
-                            ),
-
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 10.0,
-                                horizontal:
-                                    20.0), // Adjust these values as needed
-
-                            labelText: "Phone Number",
-                            labelStyle: TextStyle(
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 15.0, right: 15, bottom: 10),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(25.0)),
-                            ),
-
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 10.0,
-                                horizontal:
-                                    20.0), // Adjust these values as needed
-
-                            labelText: "Password",
-                            labelStyle: TextStyle(
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 15.0, right: 15, bottom: 10),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(25.0)),
-                            ),
-
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 10.0,
-                                horizontal:
-                                    20.0), // Adjust these values as needed
-
-                            labelText: "Confirm Password",
-                            labelStyle: TextStyle(
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
+                      InputText(
+                        controller: confirmPasswordController,
+                        labelText: "Confirm Password",
                       ),
                     ],
                   ),
@@ -253,56 +154,55 @@ class _LoginScreenState extends State<SignUpScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Checkbox(
-                    value: isChecked,
+                    value: false,
                     onChanged: (bool? value) {
-                      setState(() {
-                        isChecked = value!;
-                      });
+                      // Handle checkbox state
                     },
                   ),
-                  Text('Create account as Service Provider'),
+                  const Text('Create account as Service Provider'),
                 ],
               ),
               Center(
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.6,
                   child: TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Create account",
-                      style: TextStyle(
-                        color: Colors.white, // Set the text color to white
-                      ),
-                    ),
+                    onPressed: signUserUp,
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
+                        const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
                       ),
                       backgroundColor: MaterialStateProperty.all<Color>(
-                        Color(0xFF003C3C), // Set the color without transparency
+                        const Color(0xFF003C3C),
+                      ),
+                    ),
+                    child: const Text(
+                      "Create account",
+                      style: TextStyle(
+                        color: Colors.white,
                       ),
                     ),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text("Already have an account?"),
                     Align(
                       child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginScreen()),
-                            );
-                          },
-                          child: Text("Sign in")),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()),
+                          );
+                        },
+                        child: const Text("Sign in"),
+                      ),
                     ),
                   ],
                 ),
