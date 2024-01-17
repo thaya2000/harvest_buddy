@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/landing_page.dart';
 import 'package:harvest_buddy/login_page.dart';
 import 'package:harvest_buddy/widgets/my_textfield.dart';
+import '../models/user.dart' as model;
 
 class SignUpScreen extends StatefulWidget {
   final Function()? onTap;
@@ -16,6 +18,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final emailController = TextEditingController(text: "default1@example.com");
   final passwordController = TextEditingController(text: "asd123");
   final confirmPasswordController = TextEditingController(text: "asd123");
+  final firstNameController = TextEditingController(text: "Thaya");
+  final lastNameController = TextEditingController(text: "Theva");
+  final addressController =
+      TextEditingController(text: "N012, Hapugala, Galle.");
+  final phoneNumberController = TextEditingController(text: "+94712345678");
+  final nicNoController = TextEditingController(text: "200000000V");
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -30,10 +38,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     try {
       if (passwordController.text == confirmPasswordController.text) {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        UserCredential userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text,
         );
+
+        await addUserDetails(
+            emailController.text,
+            passwordController.text,
+            firstNameController.text,
+            lastNameController.text,
+            addressController.text,
+            phoneNumberController.text,
+            nicNoController.text,
+            userCredential.user?.uid);
 
         Navigator.push(
           scaffoldKey.currentContext!,
@@ -46,6 +65,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       genericErrorMessage(e.code);
+    }
+  }
+
+  Future<void> addUserDetails(
+    String email,
+    String password,
+    String firstName,
+    String lastName,
+    String address,
+    String phoneNumber,
+    String nicNo,
+    String? userId,
+  ) async {
+    try {
+      model.User user = model.User(
+        userId: userId!,
+        password: password,
+        email: email,
+        firstName: 'Thaya',
+        lastName: 'Theva',
+        address: 'N012, Hapugala, Galle.',
+        phoneNumber: '+94712345678',
+        nicNo: '200000000V',
+      );
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .set(user.toJson());
+      print('User details uploaded successfully!');
+    } catch (e) {
+      print('Error uploading user details: $e');
     }
   }
 
@@ -137,6 +188,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       InputText(
                         controller: emailController,
                         labelText: "Username or email",
+                      ),
+                      InputText(
+                        controller: firstNameController,
+                        labelText: "First Name",
+                      ),
+                      InputText(
+                        controller: lastNameController,
+                        labelText: "Last Name",
+                      ),
+                      InputText(
+                        controller: addressController,
+                        labelText: "Address",
+                      ),
+                      InputText(
+                        controller: nicNoController,
+                        labelText: "Nic Number",
+                      ),
+                      InputText(
+                        controller: phoneNumberController,
+                        labelText: "Phone Number",
                       ),
                       InputText(
                         controller: passwordController,
