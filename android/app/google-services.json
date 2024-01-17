@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "41447259559",
+    "project_id": "harvestbuddy-f0314",
+    "storage_bucket": "harvestbuddy-f0314.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:41447259559:android:3dbbde3d188564c6400a82",
+        "android_client_info": {
+          "package_name": "com.example.harvest_buddy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBR2vYMwlqrXonUL6yJbet2hNj1sQJGxGs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
