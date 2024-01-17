@@ -130,8 +130,9 @@ class _LoginScreenState extends State<LandingPage> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                LoginScreen()),
+                                            builder: (context) => LoginScreen(
+                                                  onTap: () {},
+                                                )),
                                       );
                                     },
                                     child: Text("Sign in")),

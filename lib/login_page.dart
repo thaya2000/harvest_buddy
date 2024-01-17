@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/landing_page.dart';
 import 'package:harvest_buddy/signup_page.dart';
+import 'package:harvest_buddy/widgets/my_textfield.dart';
 import 'constant.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -53,7 +54,6 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Form(
-          key: formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -92,49 +92,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Container(
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(25.0)),
-                            ),
-
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 10.0,
-                                horizontal:
-                                    15.0), // Adjust these values as needed
-
-                            labelText: "NIC or Mobile Number",
-                            labelStyle: TextStyle(
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
+                      InputText(
+                        controller: _emailTextController,
+                        labelText: "Email",
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(25.0)),
-                            ),
-
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 10.0,
-                                horizontal:
-                                    20.0), // Adjust these values as needed
-
-                            labelText: "Password",
-                            labelStyle: TextStyle(
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
+                      InputText(
+                        controller: _passwordTextController,
+                        labelText: "Password",
                       ),
                     ],
                   ),
@@ -151,11 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.6,
                   child: TextButton(
-                    onPressed: () {
-                      if (formKey.currentState?.validate() ?? false) {
-                        print("Validate");
-                      }
-                    },
+                    onPressed: () {},
                     child: Text(
                       "Log in",
                       style: TextStyle(

@@ -56,7 +56,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
         Navigator.push(
           scaffoldKey.currentContext!,
-          MaterialPageRoute(builder: (context) => LoginScreen()),
+          MaterialPageRoute(
+              builder: (context) => LoginScreen(
+                    onTap: () {},
+                  )),
         );
       } else {
         Navigator.pop(context);
@@ -269,7 +272,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LoginScreen()),
+                                builder: (context) => LoginScreen(
+                                      onTap: () {},
+                                    )),
                           );
                         },
                         child: const Text("Sign in"),
