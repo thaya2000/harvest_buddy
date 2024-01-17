@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/login_page.dart';
 import 'package:harvest_buddy/widgets/activity_card.dart';
+import 'package:harvest_buddy/widgets/booking_card.dart';
 import 'package:harvest_buddy/widgets/high_rated_card.dart';
 import 'constant.dart';
 import 'signup_page.dart';
@@ -68,37 +69,35 @@ class _HomePageState extends State<SearchHarvester> {
               ],
             ),
           )),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: width * 0.6,
-              decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 227, 227, 227),
-                  borderRadius: BorderRadius.circular(10.0)),
-              margin: EdgeInsets.all(25),
-              padding: EdgeInsets.all(10),
-              child: Center(child: Text("6 Harvesters found")),
-            ),
-            Column(
-              children: <Widget>[BookingCard()],
-            )
-          ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              Container(
+                width: width * 0.6,
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 227, 227, 227),
+                    borderRadius: BorderRadius.circular(10.0)),
+                margin: EdgeInsets.all(25),
+                padding: EdgeInsets.all(10),
+                child: Center(child: Text("6 Harvesters found")),
+              ),
+              SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    BookingCard(),
+                    BookingCard(),
+                    BookingCard(),
+                    BookingCard(),
+                    BookingCard(),
+                    BookingCard(),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
-    );
-  }
-}
-
-class BookingCard extends StatelessWidget {
-  const BookingCard({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [Text("HII")],
     );
   }
 }
