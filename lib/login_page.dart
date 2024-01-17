@@ -1,17 +1,40 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/landing_page.dart';
 import 'package:harvest_buddy/signup_page.dart';
 import 'constant.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key});
+  final Function()? onTap;
+  const LoginScreen({
+    Key? key,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  // GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  final _emailTextController = TextEditingController();
+  final _passwordTextController = TextEditingController();
+
+  Future signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: _emailTextController.text.trim(),
+      password: _passwordTextController.text.trim(),
+    );
+    print("button clicked");
+  }
+
+  @override
+  void dispose() {
+    _emailTextController.dispose();
+    _passwordTextController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
