@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:harvest_buddy/account_page.dart';
 import 'package:harvest_buddy/constant.dart';
 import 'package:harvest_buddy/utils/user_profile_helper.dart';
+import 'package:harvest_buddy/utils/collection_data_retriever.dart';
 import 'package:harvest_buddy/widgets/my_textfield.dart';
 
 class EditAccount extends StatefulWidget {
@@ -14,12 +15,20 @@ class EditAccount extends StatefulWidget {
 }
 
 class _EditAccountState extends State<EditAccount> {
-  final UserProfileHelper _profileHelper = UserProfileHelper();
+  final CollectionDataRetrieverHelper _collectionDataRetrieverHelper =
+      CollectionDataRetrieverHelper();
+
+  // final UserProfileHelper _profileHelper = UserProfileHelper();
+
+  bool isServiceProvider = false;
   late Map<String, dynamic> _userData;
+  late Map<String, dynamic> _farmerData;
+  late Map<String, dynamic> _serviceProviderData;
+
   final user = FirebaseAuth.instance.currentUser!;
 
-  final CollectionReference farmersCollection =
-      FirebaseFirestore.instance.collection("farmers");
+  // final CollectionReference farmersCollection =
+  //     FirebaseFirestore.instance.collection("farmers");
 
   // Create controllers with default values
   final _firstNameController = TextEditingController();
@@ -27,6 +36,8 @@ class _EditAccountState extends State<EditAccount> {
   final _addressController = TextEditingController();
   final _nicNumberController = TextEditingController();
   final _phoneNumberController = TextEditingController();
+  final _harvestTypeController = TextEditingController();
+  final _harvestRatePerAcreController = TextEditingController();
 
   @override
   void initState() {
@@ -37,7 +48,46 @@ class _EditAccountState extends State<EditAccount> {
   // Function to fetch profile data and update controllers
   Future<void> fetchProfileData() async {
     try {
-      _userData = await _profileHelper.fetchUserProfile();
+      _userData = await _collectionDataRetrieverHelper.fetchCollectionData(
+          "users", user.uid);
+
+      isServiceProvider = _userData['isServiceProvider'];
+
+      print(_userData);
+      if (_userData['isServiceProvider']) {
+        _serviceProviderData = await _collectionDataRetrieverHelper
+            .fetchCollectionData("serviceProviders", user.uid);
+
+        print('Service Provider Data: $_serviceProviderData');
+
+        setState(() {
+          _firstNameController.text = _serviceProviderData['firstName'] ?? "";
+          _lastNameController.text = _serviceProviderData['lastName'] ?? "";
+          _addressController.text = _serviceProviderData['address'] ?? "";
+          _nicNumberController.text = _serviceProviderData['nicNo'] ?? "";
+          _phoneNumberController.text =
+              _serviceProviderData['phoneNumber'] ?? "";
+          _harvestTypeController.text =
+              _serviceProviderData['harvesterType'] ?? "";
+          _harvestRatePerAcreController.text =
+              _serviceProviderData['ratePerAcre'] ?? "";
+        });
+      } else {
+        _farmerData = await _collectionDataRetrieverHelper.fetchCollectionData(
+            "farmers", user.uid);
+
+        print('farmer Data: $_farmerData');
+
+        setState(() {
+          _firstNameController.text = _farmerData['firstName'] ?? "";
+          _lastNameController.text = _farmerData['lastName'] ?? "";
+          _addressController.text = _farmerData['address'] ?? "";
+          _nicNumberController.text = _farmerData['nicNo'] ?? "";
+          _phoneNumberController.text = _farmerData['phoneNumber'] ?? "";
+        });
+      }
+
+      // _farmerData = await _profileHelper.fetchUserProfile();
 
       // DocumentSnapshot farmerSnapshot =
       //     await farmersCollection.doc(user.uid).get();
@@ -49,16 +99,6 @@ class _EditAccountState extends State<EditAccount> {
 
       // Map<String, dynamic> userData =
       //     farmerSnapshot.data() as Map<String, dynamic>;
-
-      print('farmer Data: $_userData');
-
-      setState(() {
-        _firstNameController.text = _userData['firstName'] ?? "";
-        _lastNameController.text = _userData['lastName'] ?? "";
-        _addressController.text = _userData['address'] ?? "";
-        _nicNumberController.text = _userData['nicNo'] ?? "";
-        _phoneNumberController.text = _userData['phoneNumber'] ?? "";
-      });
     } catch (e) {
       print('Error fetching profile data: $e');
     }
@@ -66,13 +106,31 @@ class _EditAccountState extends State<EditAccount> {
 
   Future<void> saveEditedData() async {
     try {
-      await farmersCollection.doc(user.uid).update({
-        'firstName': _firstNameController.text,
-        'lastName': _lastNameController.text,
-        'address': _addressController.text,
-        'nicNo': _nicNumberController.text,
-        'phoneNumber': _phoneNumberController.text,
-      });
+      if (_userData['isServiceProvider']) {
+        await FirebaseFirestore.instance
+            .collection("serviceProviders")
+            .doc(user.uid)
+            .set({
+          'firstName': _firstNameController.text,
+          'lastName': _lastNameController.text,
+          'address': _addressController.text,
+          'nicNo': _nicNumberController.text,
+          'phoneNumber': _phoneNumberController.text,
+          'harvesterType': _harvestTypeController.text,
+          'ratePerAcre': _harvestRatePerAcreController.text,
+        });
+      } else {
+        await FirebaseFirestore.instance
+            .collection("farmers")
+            .doc(user.uid)
+            .set({
+          'firstName': _firstNameController.text,
+          'lastName': _lastNameController.text,
+          'address': _addressController.text,
+          'nicNo': _nicNumberController.text,
+          'phoneNumber': _phoneNumberController.text,
+        });
+      }
 
       // ignore: use_build_context_synchronously
       Navigator.push(
@@ -169,6 +227,16 @@ class _EditAccountState extends State<EditAccount> {
                           controller: _addressController,
                           labelText: "Address",
                         ),
+                        if (isServiceProvider)
+                          InputText(
+                            controller: _harvestTypeController,
+                            labelText: "Harvester Type",
+                          ),
+                        if (isServiceProvider)
+                          InputText(
+                            controller: _harvestRatePerAcreController,
+                            labelText: "Enter Rate Per Acre",
+                          ),
                       ],
                     ),
                   ),

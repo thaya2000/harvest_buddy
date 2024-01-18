@@ -2,20 +2,27 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/edit_account_page.dart';
 import 'package:harvest_buddy/landing_page.dart';
-import 'package:harvest_buddy/utils/user_profile_helper.dart';
+import 'package:harvest_buddy/utils/collection_data_retriever.dart';
 import 'constant.dart';
 
 class AccountPage extends StatefulWidget {
-  const AccountPage({super.key});
+  const AccountPage({Key? key});
 
   @override
   State<AccountPage> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<AccountPage> {
-  // GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  late String firstName = "";
-  final UserProfileHelper _profileHelper = UserProfileHelper();
+  bool isServiceProvider = false;
+  late Map<String, dynamic> _userData;
+  late Map<String, dynamic> _farmerData;
+  late Map<String, dynamic> _serviceProviderData;
+  final CollectionDataRetrieverHelper _collectionDataRetrieverHelper =
+      CollectionDataRetrieverHelper();
+  final user = FirebaseAuth.instance.currentUser!;
+  // late Future<void> _fetchProfileNameFuture;
+  late String profileFullName = "";
+
   @override
   void initState() {
     super.initState();
@@ -23,16 +30,37 @@ class _LoginScreenState extends State<AccountPage> {
   }
 
   Future<void> fetchProfileName() async {
-    final Map<String, dynamic> userProfile =
-        await _profileHelper.fetchUserProfile();
-    final String firstNameValue = userProfile['firstName'] ?? '';
-    final String lastNameValue = userProfile['lastName'] ?? '';
+    _userData = await _collectionDataRetrieverHelper.fetchCollectionData(
+        "users", user.uid);
 
-    firstName = firstNameValue + " " + lastNameValue;
-    print(firstName);
+    if (_userData['isServiceProvider']) {
+      _serviceProviderData = await _collectionDataRetrieverHelper
+          .fetchCollectionData("serviceProviders", user.uid);
+      final String firstNameValue = _serviceProviderData['firstName'] ?? '';
+      final String lastNameValue = _serviceProviderData['lastName'] ?? '';
+
+      setState(() {
+        profileFullName = "$firstNameValue $lastNameValue";
+      });
+
+      print("Service provider name");
+      print(profileFullName);
+    } else {
+      _farmerData = await _collectionDataRetrieverHelper.fetchCollectionData(
+          "users", user.uid);
+      final String firstNameValue = _farmerData['firstName'] ?? '';
+      final String lastNameValue = _farmerData['lastName'] ?? '';
+
+      setState(() {
+        profileFullName = "$firstNameValue $lastNameValue";
+      });
+
+      print("Farmer name");
+      print(profileFullName);
+    }
   }
 
-  Future<void> _showDeleteAccountConfirmatiomDialog(
+  Future<void> _showDeleteAccountConfirmationDialog(
       BuildContext context) async {
     return showDialog<void>(
       context: context,
@@ -49,8 +77,8 @@ class _LoginScreenState extends State<AccountPage> {
             ),
             TextButton(
               onPressed: () async {
-                await deleteAccount(); // Corrected call
-                Navigator.of(context).pop(); // Close the dialog
+                await deleteAccount();
+                Navigator.of(context).pop();
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const LandingPage()),
@@ -73,15 +101,15 @@ class _LoginScreenState extends State<AccountPage> {
           content: const Text('Are you sure you want to log out?'),
           actions: <Widget>[
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                Navigator.of(context).pop();
               },
               child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
-                // Perform logout and navigate to LandingPage
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop();
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const LandingPage()),
@@ -98,18 +126,13 @@ class _LoginScreenState extends State<AccountPage> {
   Future<void> deleteAccount() async {
     try {
       await FirebaseAuth.instance.currentUser?.delete();
-
-      // ignore: use_build_context_synchronously
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LandingPage()),
       );
-
       print('Successfully deleted');
-
-      // Optional: You can update the local state or perform other actions after saving
     } catch (e) {
-      print('Error saving edited data: $e');
+      print('Error deleting account: $e');
     }
   }
 
@@ -117,18 +140,6 @@ class _LoginScreenState extends State<AccountPage> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-
-    // Define text styles
-    TextStyle appNameStyle = const TextStyle(
-      fontSize: 45.0,
-      fontWeight: FontWeight.bold,
-      color: Color.fromARGB(255, 0, 60, 60),
-    );
-    TextStyle profileName = const TextStyle(
-      fontSize: 15.0,
-      fontWeight: FontWeight.bold,
-      color: Color.fromARGB(255, 0, 60, 60),
-    );
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -147,8 +158,8 @@ class _LoginScreenState extends State<AccountPage> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: Colors.black, // Set your desired border color
-                          width: 2.0, // Set the border width
+                          color: Colors.black,
+                          width: 2.0,
                         ),
                       ),
                       child: ClipOval(
@@ -162,7 +173,7 @@ class _LoginScreenState extends State<AccountPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0),
-                      child: Text(firstName, style: profileName),
+                      child: Text(profileFullName, style: profileNameTextStyle),
                     )
                   ],
                 ),
@@ -182,11 +193,10 @@ class _LoginScreenState extends State<AccountPage> {
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.5), // shadow color
-                            spreadRadius:
-                                2, // how much the shadow should spread
-                            blurRadius: 5, // how blurry the shadow should be
-                            offset: Offset(0, 2), // changes the shadow position
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 2),
                           ),
                         ],
                       ),
@@ -195,7 +205,8 @@ class _LoginScreenState extends State<AccountPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const EditAccount()),
+                              builder: (context) => const EditAccount(),
+                            ),
                           );
                         },
                         icon: const Icon(
@@ -214,17 +225,16 @@ class _LoginScreenState extends State<AccountPage> {
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.5), // shadow color
-                          spreadRadius: 2, // how much the shadow should spread
-                          blurRadius: 5, // how blurry the shadow should be
-                          offset:
-                              const Offset(0, 2), // changes the shadow position
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: const Offset(0, 2),
                         ),
                       ],
                     ),
                     child: TextButton.icon(
                       onPressed: () {
-                        _showDeleteAccountConfirmatiomDialog(context);
+                        _showDeleteAccountConfirmationDialog(context);
                       },
                       icon: const Icon(
                         Icons.delete,
@@ -242,8 +252,7 @@ class _LoginScreenState extends State<AccountPage> {
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.3,
                   child: TextButton(
-                    onPressed: () async {
-                      await FirebaseAuth.instance.signOut();
+                    onPressed: () {
                       _showLogoutConfirmationDialog(context);
                     },
                     style: ButtonStyle(
@@ -253,13 +262,13 @@ class _LoginScreenState extends State<AccountPage> {
                         ),
                       ),
                       backgroundColor: MaterialStateProperty.all<Color>(
-                        Colors.red, // Set the color without transparency
+                        Colors.red,
                       ),
                     ),
                     child: const Text(
                       "Log out",
                       style: TextStyle(
-                        color: Colors.white, // Set the text color to white
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -272,3 +281,10 @@ class _LoginScreenState extends State<AccountPage> {
     );
   }
 }
+
+// Define text style
+TextStyle profileNameTextStyle = const TextStyle(
+  fontSize: 15.0,
+  fontWeight: FontWeight.bold,
+  color: Color.fromARGB(255, 0, 60, 60),
+);
