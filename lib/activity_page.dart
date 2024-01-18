@@ -1,13 +1,8 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:harvest_buddy/login_page.dart';
 import 'package:harvest_buddy/widgets/activity_card.dart';
-import 'package:harvest_buddy/widgets/high_rated_card.dart';
-import 'constant.dart';
-import 'signup_page.dart';
 
 class ActivityScreen extends StatefulWidget {
-  ActivityScreen({super.key});
+  const ActivityScreen({super.key});
 
   @override
   State<ActivityScreen> createState() => _HomePageState();
@@ -23,12 +18,12 @@ class _HomePageState extends State<ActivityScreen> {
     double width = MediaQuery.of(context).size.width;
 
     // Define text styles
-    TextStyle appNameStyle = TextStyle(
+    TextStyle appNameStyle = const TextStyle(
       fontSize: 24.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60), // Set a fully opaque color
     );
-    TextStyle h1style = TextStyle(
+    TextStyle h1style = const TextStyle(
       fontSize: 20.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60), // Set a fully opaque color
@@ -64,14 +59,14 @@ class _HomePageState extends State<ActivityScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           "Upcoming",
                           style: TextStyle(
                             fontSize: 20,
                             fontStyle: FontStyle.italic,
                           ),
                         ),
-                        SizedBox(height: 4), // Add a gap between text and line
+                        const SizedBox(height: 4), // Add a gap between text and line
                         Container(
                           height: 2,
                           width: 80, // Set your desired line width
@@ -92,14 +87,14 @@ class _HomePageState extends State<ActivityScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           "Completed",
                           style: TextStyle(
                             fontSize: 20,
                             fontStyle: FontStyle.italic,
                           ),
                         ),
-                        SizedBox(height: 4), // Add a gap between text and line
+                        const SizedBox(height: 4), // Add a gap between text and line
                         Container(
                           height: 2,
                           width: 80, // Set your desired line width
@@ -115,7 +110,7 @@ class _HomePageState extends State<ActivityScreen> {
               ),
             ),
             (selectedButtonIndex == 0
-                ? SingleChildScrollView(
+                ? const SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Center(
                       child: Column(
@@ -156,7 +151,7 @@ class _HomePageState extends State<ActivityScreen> {
                       ),
                     ),
                   )
-                : SingleChildScrollView(
+                : const SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Center(
                       child: Column(

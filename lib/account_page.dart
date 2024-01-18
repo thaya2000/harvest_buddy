@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/edit_account_page.dart';
 import 'package:harvest_buddy/landing_page.dart';
-import 'package:harvest_buddy/signup_page.dart';
 import 'package:harvest_buddy/utils/user_profile_helper.dart';
 import 'constant.dart';
 
@@ -26,10 +25,92 @@ class _LoginScreenState extends State<AccountPage> {
   Future<void> fetchProfileName() async {
     final Map<String, dynamic> userProfile =
         await _profileHelper.fetchUserProfile();
-    setState(() {
-      firstName = userProfile['firstName'] + " " + userProfile['lastName'];
-      print(firstName);
-    });
+    final String firstNameValue = userProfile['firstName'] ?? '';
+    final String lastNameValue = userProfile['lastName'] ?? '';
+
+    firstName = firstNameValue + " " + lastNameValue;
+    print(firstName);
+  }
+
+  Future<void> _showDeleteAccountConfirmatiomDialog(
+      BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Delete account'),
+          content: const Text('Are you sure you want to delete account?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () async {
+                await deleteAccount(); // Corrected call
+                Navigator.of(context).pop(); // Close the dialog
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LandingPage()),
+                );
+              },
+              child: const Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showLogoutConfirmationDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm Logout'),
+          content: const Text('Are you sure you want to log out?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Perform logout and navigate to LandingPage
+                Navigator.of(context).pop(); // Close the dialog
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LandingPage()),
+                );
+              },
+              child: const Text('Logout'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> deleteAccount() async {
+    try {
+      await FirebaseAuth.instance.currentUser?.delete();
+
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const LandingPage()),
+      );
+
+      print('Successfully deleted');
+
+      // Optional: You can update the local state or perform other actions after saving
+    } catch (e) {
+      print('Error saving edited data: $e');
+    }
   }
 
   @override
@@ -38,12 +119,12 @@ class _LoginScreenState extends State<AccountPage> {
     double width = MediaQuery.of(context).size.width;
 
     // Define text styles
-    TextStyle appNameStyle = TextStyle(
+    TextStyle appNameStyle = const TextStyle(
       fontSize: 45.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60),
     );
-    TextStyle profileName = TextStyle(
+    TextStyle profileName = const TextStyle(
       fontSize: 15.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60),
@@ -105,7 +186,8 @@ class _LoginScreenState extends State<AccountPage> {
                             spreadRadius:
                                 2, // how much the shadow should spread
                             blurRadius: 5, // how blurry the shadow should be
-                            offset: Offset(0, 2), // changes the shadow position
+                            offset: const Offset(
+                                0, 2), // changes the shadow position
                           ),
                         ],
                       ),
@@ -114,14 +196,14 @@ class _LoginScreenState extends State<AccountPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => EditAccount()),
+                                builder: (context) => const EditAccount()),
                           );
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.edit,
                           size: 20,
                         ),
-                        label: Text("Edit account"),
+                        label: const Text("Edit account"),
                       ),
                     ),
                   ),
@@ -136,7 +218,8 @@ class _LoginScreenState extends State<AccountPage> {
                           color: Colors.grey.withOpacity(0.5), // shadow color
                           spreadRadius: 2, // how much the shadow should spread
                           blurRadius: 5, // how blurry the shadow should be
-                          offset: Offset(0, 2), // changes the shadow position
+                          offset:
+                              const Offset(0, 2), // changes the shadow position
                         ),
                       ],
                     ),
@@ -144,11 +227,11 @@ class _LoginScreenState extends State<AccountPage> {
                       onPressed: () {
                         _showDeleteAccountConfirmatiomDialog(context);
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.delete,
                         size: 20,
                       ),
-                      label: Text("Delete account"),
+                      label: const Text("Delete account"),
                     ),
                   ),
                 ],
@@ -157,27 +240,27 @@ class _LoginScreenState extends State<AccountPage> {
             Padding(
               padding: const EdgeInsets.only(top: 150.0),
               child: Center(
-                child: Container(
+                child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.3,
                   child: TextButton(
                     onPressed: () async {
                       await FirebaseAuth.instance.signOut();
                       _showLogoutConfirmationDialog(context);
                     },
-                    child: Text(
-                      "Log out",
-                      style: TextStyle(
-                        color: Colors.white, // Set the text color to white
-                      ),
-                    ),
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
+                        const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(15)),
                         ),
                       ),
                       backgroundColor: MaterialStateProperty.all<Color>(
                         Colors.red, // Set the color without transparency
+                      ),
+                    ),
+                    child: const Text(
+                      "Log out",
+                      style: TextStyle(
+                        color: Colors.white, // Set the text color to white
                       ),
                     ),
                   ),
@@ -188,93 +271,5 @@ class _LoginScreenState extends State<AccountPage> {
         ),
       ),
     );
-  }
-
-  Future<void> _showLogoutConfirmationDialog(BuildContext context) async {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Confirm Logout'),
-          content: Text('Are you sure you want to log out?'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                // Perform logout and navigate to LandingPage
-                Navigator.of(context).pop(); // Close the dialog
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => LandingPage()),
-                );
-              },
-              child: Text('Logout'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _showDeleteAccountConfirmatiomDialog(
-      BuildContext context) async {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Delete account'),
-          content: Text('Are you sure you want to delete account?'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                // Perform logout and navigate to LandingPage
-                deleteAccount();
-                Navigator.of(context).pop(); // Close the dialog
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => LandingPage()),
-                );
-              },
-              child: Text('Delete'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> deleteAccount() async {
-    try {
-      // await farmersCollection.doc(user.uid).update({
-      //   'firstName': _firstNameController.text,
-      //   'lastName': _lastNameController.text,
-      //   'address': _addressController.text,
-      //   'nicNo': _nicNumberController.text,
-      //   'phoneNumber': _phoneNumberController.text,
-      // });
-
-      // ignore: use_build_context_synchronously
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const AccountPage()),
-      );
-
-      print('Successfully saved');
-
-      // Optional: You can update the local state or perform other actions after saving
-    } catch (e) {
-      print('Error saving edited data: $e');
-    }
   }
 }

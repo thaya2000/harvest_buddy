@@ -2,15 +2,12 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/account_page.dart';
 import 'package:harvest_buddy/activity_page.dart';
-import 'package:harvest_buddy/login_page.dart';
 import 'package:harvest_buddy/schedule_page.dart';
 import 'package:harvest_buddy/search_harvester_page.dart';
 import 'package:harvest_buddy/widgets/high_rated_card.dart';
-import 'constant.dart';
-import 'signup_page.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -21,9 +18,9 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _pages = [
     HomePageContent(),
-    SchedulePage(),
-    ActivityScreen(),
-    AccountPage(),
+    const SchedulePage(),
+    const ActivityScreen(),
+    const AccountPage(),
   ];
 
   @override
@@ -40,8 +37,8 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.transparent,
-        color: Color.fromARGB(255, 0, 200, 200),
-        items: <Widget>[
+        color: const Color.fromARGB(255, 0, 200, 200),
+        items: const <Widget>[
           Icon(Icons.home, size: 30),
           Icon(Icons.event, size: 30),
           Icon(Icons.list, size: 30),
@@ -62,6 +59,8 @@ class HomePageContent extends StatelessWidget {
   TextEditingController locationController = TextEditingController();
   DateTime? selectedDate;
 
+  HomePageContent({super.key});
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -72,12 +71,12 @@ class HomePageContent extends StatelessWidget {
     FocusNode dateFocusNode = FocusNode();
 
     // Define text styles
-    TextStyle appNameStyle = TextStyle(
+    TextStyle appNameStyle = const TextStyle(
       fontSize: 24.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60), // Set a fully opaque color
     );
-    TextStyle h1style = TextStyle(
+    TextStyle h1style = const TextStyle(
       fontSize: 20.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60), // Set a fully opaque color
@@ -113,7 +112,7 @@ class HomePageContent extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(5.0),
-                          child: Container(
+                          child: SizedBox(
                             height: height * 0.08,
                             width: width * 0.9,
                             child: Material(
@@ -123,14 +122,14 @@ class HomePageContent extends StatelessWidget {
                                 focusNode: locationFocusNode,
                                 decoration: InputDecoration(
                                   labelText: 'Enter Your Paddy Land Location',
-                                  suffixIcon: Icon(Icons.location_on),
+                                  suffixIcon: const Icon(Icons.location_on),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20.0),
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide: const BorderSide(color: Colors.grey),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20.0),
-                                    borderSide: BorderSide(color: Colors.blue),
+                                    borderSide: const BorderSide(color: Colors.blue),
                                   ),
                                 ),
                               ),
@@ -139,7 +138,7 @@ class HomePageContent extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
-                          child: Container(
+                          child: SizedBox(
                             height: height * 0.08,
                             width: width * 0.9,
                             child: Material(
@@ -156,7 +155,7 @@ class HomePageContent extends StatelessWidget {
                                     initialDate: DateTime.now(),
                                     firstDate: DateTime.now(),
                                     lastDate:
-                                        DateTime.now().add(Duration(days: 365)),
+                                        DateTime.now().add(const Duration(days: 365)),
                                   );
 
                                   if (pickedDate != null &&
@@ -168,14 +167,14 @@ class HomePageContent extends StatelessWidget {
                                 },
                                 decoration: InputDecoration(
                                   labelText: "Date",
-                                  suffixIcon: Icon(Icons.calendar_today),
+                                  suffixIcon: const Icon(Icons.calendar_today),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20.0),
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide: const BorderSide(color: Colors.grey),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20.0),
-                                    borderSide: BorderSide(color: Colors.blue),
+                                    borderSide: const BorderSide(color: Colors.blue),
                                   ),
                                 ),
                               ),
@@ -188,33 +187,33 @@ class HomePageContent extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0),
                     child: Center(
-                      child: Container(
+                      child: SizedBox(
                         width: MediaQuery.of(context).size.width * 0.6,
                         child: TextButton(
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SearchHarvester()),
+                                  builder: (context) => const SearchHarvester()),
                             );
                           },
-                          child: Text(
-                            "Search harvester",
-                            style: TextStyle(
-                              color:
-                                  Colors.white, // Set the text color to white
-                            ),
-                          ),
                           style: ButtonStyle(
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
+                              const RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15)),
                               ),
                             ),
                             backgroundColor: MaterialStateProperty.all<Color>(
                               Colors.red, // Set the color without transparency
+                            ),
+                          ),
+                          child: const Text(
+                            "Search harvester",
+                            style: TextStyle(
+                              color:
+                                  Colors.white, // Set the text color to white
                             ),
                           ),
                         ),

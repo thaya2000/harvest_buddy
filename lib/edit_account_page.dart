@@ -3,12 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/account_page.dart';
 import 'package:harvest_buddy/constant.dart';
-import 'package:harvest_buddy/home_page.dart';
 import 'package:harvest_buddy/utils/user_profile_helper.dart';
 import 'package:harvest_buddy/widgets/my_textfield.dart';
 
 class EditAccount extends StatefulWidget {
-  EditAccount({Key? key});
+  const EditAccount({super.key});
 
   @override
   State<EditAccount> createState() => _EditAccountState();
@@ -95,7 +94,7 @@ class _EditAccountState extends State<EditAccount> {
     double width = MediaQuery.of(context).size.width;
 
     // Define text styles
-    TextStyle profileName = TextStyle(
+    TextStyle profileName = const TextStyle(
       fontSize: 15.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60),
@@ -175,7 +174,7 @@ class _EditAccountState extends State<EditAccount> {
                   ),
                 ),
                 Center(
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: TextButton(
                       onPressed: saveEditedData,

@@ -1,13 +1,7 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:harvest_buddy/login_page.dart';
-import 'package:harvest_buddy/widgets/activity_card.dart';
-import 'package:harvest_buddy/widgets/high_rated_card.dart';
-import 'constant.dart';
-import 'signup_page.dart';
 
 class SearchHarvester extends StatefulWidget {
-  SearchHarvester({super.key});
+  const SearchHarvester({super.key});
 
   @override
   State<SearchHarvester> createState() => _HomePageState();
@@ -23,12 +17,12 @@ class _HomePageState extends State<SearchHarvester> {
     double width = MediaQuery.of(context).size.width;
 
     // Define text styles
-    TextStyle appNameStyle = TextStyle(
+    TextStyle appNameStyle = const TextStyle(
       fontSize: 24.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60), // Set a fully opaque color
     );
-    TextStyle h1style = TextStyle(
+    TextStyle h1style = const TextStyle(
       fontSize: 20.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60), // Set a fully opaque color
@@ -38,9 +32,9 @@ class _HomePageState extends State<SearchHarvester> {
       extendBody: true,
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-          backgroundColor: Color.fromARGB(
+          backgroundColor: const Color.fromARGB(
               255, 0, 120, 120), // Set your desired background color
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               bottomLeft:
                   Radius.circular(20.0), // Set your desired bottom-left radius
@@ -49,7 +43,7 @@ class _HomePageState extends State<SearchHarvester> {
             ),
           ),
           title: Container(
-            child: Column(
+            child: const Column(
               children: [
                 Text(
                   "Mallavi",
@@ -74,13 +68,13 @@ class _HomePageState extends State<SearchHarvester> {
             Container(
               width: width * 0.6,
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 227, 227, 227),
+                  color: const Color.fromARGB(255, 227, 227, 227),
                   borderRadius: BorderRadius.circular(10.0)),
-              margin: EdgeInsets.all(25),
-              padding: EdgeInsets.all(10),
-              child: Center(child: Text("6 Harvesters found")),
+              margin: const EdgeInsets.all(25),
+              padding: const EdgeInsets.all(10),
+              child: const Center(child: Text("6 Harvesters found")),
             ),
-            Column(
+            const Column(
               children: <Widget>[BookingCard()],
             )
           ],
@@ -97,7 +91,7 @@ class BookingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [Text("HII")],
     );
   }

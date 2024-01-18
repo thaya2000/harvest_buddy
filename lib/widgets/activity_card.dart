@@ -36,7 +36,7 @@ class ActivityCard extends StatelessWidget {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 2,
               blurRadius: 5,
-              offset: Offset(0, 2),
+              offset: const Offset(0, 2),
             ),
           ],
         ),
@@ -47,10 +47,10 @@ class ActivityCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(0.0),
                   child: Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Color(0xFF3C9595),
+                      color: const Color(0xFF3C9595),
                     ),
                     child: Row(
                       children: [
@@ -62,7 +62,7 @@ class ActivityCard extends StatelessWidget {
                         ),
                         Column(
                           children: [
-                            Text("Booking ID"),
+                            const Text("Booking ID"),
                             Text(bookingId),
                           ],
                         ),
@@ -73,26 +73,26 @@ class ActivityCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Container(
-                    padding: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
-                        color: Color(0xFFDFD895),
+                        color: const Color(0xFFDFD895),
                         borderRadius: BorderRadius.circular(10)),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text("District"),
+                          const Text("District"),
                           Padding(
                             padding: const EdgeInsets.only(left: 15.0),
                             child: Text(district),
                           ),
-                          SizedBox(height: 4),
+                          const SizedBox(height: 4),
                           Container(
                             height: 1,
                             width: 150,
                             color: Colors.black,
                           ),
-                          Text("Area"),
+                          const Text("Area"),
                           Padding(
                             padding: const EdgeInsets.only(left: 15.0),
                             child: Text(area),
@@ -102,7 +102,7 @@ class ActivityCard extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Container(
               height: 160,
               width: 2,
@@ -114,17 +114,17 @@ class ActivityCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("Booking Date"),
+                  const Text("Booking Date"),
                   Padding(
                     padding: const EdgeInsets.only(left: 15.0, bottom: 10),
                     child: Text(bookingDate),
                   ),
-                  Text("Time Slot"),
+                  const Text("Time Slot"),
                   Padding(
                     padding: const EdgeInsets.only(left: 15.0, bottom: 10),
                     child: Text(timeSlot),
                   ),
-                  Text("Harvester Phone"),
+                  const Text("Harvester Phone"),
                   Padding(
                     padding: const EdgeInsets.only(left: 15.0, bottom: 10),
                     child: Text(harvesterPhone),
