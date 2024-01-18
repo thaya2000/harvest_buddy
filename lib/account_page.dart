@@ -197,15 +197,12 @@ class _LoginScreenState extends State<AccountPage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const EditAccount()),
-                                builder: (context) => const EditAccount()),
                           );
                         },
                         icon: const Icon(
-                        icon: const Icon(
-                          Icons.edit,
+                         Icons.edit,
                           size: 20,
                         ),
-                        label: const Text("Edit account"),
                         label: const Text("Edit account"),
                       ),
                     ),
@@ -231,11 +228,9 @@ class _LoginScreenState extends State<AccountPage> {
                         _showDeleteAccountConfirmatiomDialog(context);
                       },
                       icon: const Icon(
-                      icon: const Icon(
                         Icons.delete,
                         size: 20,
                       ),
-                      label: const Text("Delete account"),
                       label: const Text("Delete account"),
                     ),
                   ),
@@ -256,9 +251,8 @@ class _LoginScreenState extends State<AccountPage> {
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         const RoundedRectangleBorder(
-                        const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(15)),
-                        ),
+                        
                       ),
                       backgroundColor: MaterialStateProperty.all<Color>(
                         Colors.red, // Set the color without transparency
