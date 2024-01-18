@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/home_page.dart';
+import 'package:harvest_buddy/home_service_provider.dart';
 import 'package:harvest_buddy/landing_page.dart';
 import 'package:harvest_buddy/signup_page.dart';
 import 'package:harvest_buddy/widgets/my_textfield.dart';
@@ -18,6 +20,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final CollectionReference userCollection =
+      FirebaseFirestore.instance.collection("users");
+
   // GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -39,13 +44,27 @@ class _LoginScreenState extends State<LoginScreen> {
         password: _passwordTextController.text.trim(),
       );
 
-      // final user = FirebaseAuth.instance.currentUser!;
-      // print(user.isServiceProvider);
+      final user = FirebaseAuth.instance.currentUser!;
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-      );
+      DocumentSnapshot userSnapshot = await userCollection.doc(user.uid).get();
+      Map<String, dynamic> _userData =
+          userSnapshot.data() as Map<String, dynamic>;
+
+      print('farmer Data: $_userData');
+
+      if (_userData['isServiceProvider']) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeServiceProvider()),
+        );
+        print("Service Provider Login page");
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+        print("Farmer Login page");
+      }
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       genericErrorMessage(e.code);
