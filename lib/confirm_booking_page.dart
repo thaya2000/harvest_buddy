@@ -154,19 +154,28 @@ class _HomePageState extends State<ConfirmBooking> {
                 width: width * 0.9,
                 child: Material(
                   elevation: 0.0,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Enter you paddy field location',
-                      suffixIcon: const Icon(Icons.location_on),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: const BorderSide(color: Colors.grey),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(
+                            labelText: 'Enter your paddy field location',
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                              borderSide: BorderSide(color: Colors.blue),
+                            ),
+                          ),
+                        ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: const BorderSide(color: Colors.blue),
+                      IconButton(
+                        icon: Icon(Icons.location_on),
+                        onPressed: () {},
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ),
