@@ -186,8 +186,7 @@ class _LoginScreenState extends State<AccountPage> {
                             spreadRadius:
                                 2, // how much the shadow should spread
                             blurRadius: 5, // how blurry the shadow should be
-                            offset: const Offset(
-                                0, 2), // changes the shadow position
+                            offset: Offset(0, 2), // changes the shadow position
                           ),
                         ],
                       ),

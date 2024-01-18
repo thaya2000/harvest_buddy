@@ -121,15 +121,17 @@ class HomePageContent extends StatelessWidget {
                                 controller: locationController,
                                 focusNode: locationFocusNode,
                                 decoration: InputDecoration(
-                                  labelText: 'Enter Your Paddy Land Location',
+                                  labelText: 'Enter Your Paddy Land Area',
                                   suffixIcon: const Icon(Icons.location_on),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20.0),
-                                    borderSide: const BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20.0),
-                                    borderSide: const BorderSide(color: Colors.blue),
+                                    borderSide:
+                                        const BorderSide(color: Colors.blue),
                                   ),
                                 ),
                               ),
@@ -154,8 +156,8 @@ class HomePageContent extends StatelessWidget {
                                     context: context,
                                     initialDate: DateTime.now(),
                                     firstDate: DateTime.now(),
-                                    lastDate:
-                                        DateTime.now().add(const Duration(days: 365)),
+                                    lastDate: DateTime.now()
+                                        .add(const Duration(days: 365)),
                                   );
 
                                   if (pickedDate != null &&
@@ -170,11 +172,13 @@ class HomePageContent extends StatelessWidget {
                                   suffixIcon: const Icon(Icons.calendar_today),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20.0),
-                                    borderSide: const BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20.0),
-                                    borderSide: const BorderSide(color: Colors.blue),
+                                    borderSide:
+                                        const BorderSide(color: Colors.blue),
                                   ),
                                 ),
                               ),
@@ -194,7 +198,8 @@ class HomePageContent extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const SearchHarvester()),
+                                  builder: (context) =>
+                                      const SearchHarvester()),
                             );
                           },
                           style: ButtonStyle(

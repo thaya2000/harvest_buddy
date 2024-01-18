@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harvest_buddy/widgets/booking_card.dart';
 
 class SearchHarvester extends StatefulWidget {
   const SearchHarvester({super.key});
@@ -62,37 +63,35 @@ class _HomePageState extends State<SearchHarvester> {
               ],
             ),
           )),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: width * 0.6,
-              decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 227, 227, 227),
-                  borderRadius: BorderRadius.circular(10.0)),
-              margin: const EdgeInsets.all(25),
-              padding: const EdgeInsets.all(10),
-              child: const Center(child: Text("6 Harvesters found")),
-            ),
-            const Column(
-              children: <Widget>[BookingCard()],
-            )
-          ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              Container(
+                width: width * 0.6,
+                decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 227, 227, 227),
+                    borderRadius: BorderRadius.circular(10.0)),
+                margin: const EdgeInsets.all(25),
+                padding: const EdgeInsets.all(10),
+                child: const Center(child: Text("6 Harvesters found")),
+              ),
+              const SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    BookingCard(),
+                    BookingCard(),
+                    BookingCard(),
+                    BookingCard(),
+                    BookingCard(),
+                    BookingCard(),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
-    );
-  }
-}
-
-class BookingCard extends StatelessWidget {
-  const BookingCard({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      children: [Text("HII")],
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class SchedulePage extends StatefulWidget {
   const SchedulePage({super.key});
+  const SchedulePage({super.key});
 
   @override
   State<SchedulePage> createState() => _LoginScreenState();
@@ -127,7 +128,8 @@ class _LoginScreenState extends State<SchedulePage> {
                               context: context,
                               initialDate: DateTime.now(),
                               firstDate: DateTime.now(),
-                              lastDate: DateTime.now().add(const Duration(days: 365)),
+                              lastDate:
+                                  DateTime.now().add(const Duration(days: 365)),
                             );
 
                             if (pickedDate != null &&
