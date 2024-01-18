@@ -4,6 +4,7 @@ import 'package:harvest_buddy/login_page.dart';
 import 'package:harvest_buddy/widgets/activity_card.dart';
 import 'package:harvest_buddy/widgets/booking_card.dart';
 import 'package:harvest_buddy/widgets/high_rated_card.dart';
+import 'package:harvest_buddy/widgets/time_slot.dart';
 import 'constant.dart';
 import 'signup_page.dart';
 
@@ -142,87 +143,16 @@ class _HomePageState extends State<ConfirmBooking> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top: 40.0, right: 10),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.black)),
-                    // width: MediaQuery.of(context).size.width * 0.4,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Morning Slot",
-                        style: TextStyle(
-                          color: Colors.black, // Set the text color to white
-                        ),
-                      ),
-                      style: ButtonStyle(
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                TimeSlot(
+                  timeSlot: "Morning Slot",
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 40.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.green,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    // width: MediaQuery.of(context).size.width * 0.4,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Afternoon Slot",
-                        style: TextStyle(
-                          color: Colors.white, // Set the text color to white
-                        ),
-                      ),
-                      style: ButtonStyle(
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                TimeSlot(
+                  timeSlot: "Afternoon Slot",
+                )
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                // width: MediaQuery.of(context).size.width * 0.4,
-                child: TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Evening Slot",
-                    style: TextStyle(
-                      color: Colors.white, // Set the text color to white
-                    ),
-                  ),
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+            TimeSlot(
+              timeSlot: "Evening Slot",
             ),
             Padding(
               padding: const EdgeInsets.only(top: 40.0),
