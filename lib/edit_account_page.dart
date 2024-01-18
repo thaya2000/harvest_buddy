@@ -3,8 +3,26 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/account_page.dart';
 import 'package:harvest_buddy/constant.dart';
+<<<<<<< HEAD
 import 'package:harvest_buddy/utils/user_profile_helper.dart';
 import 'package:harvest_buddy/widgets/my_textfield.dart';
+=======
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: EditAccount(),
+    );
+  }
+}
+>>>>>>> vithu_1
 
 class EditAccount extends StatefulWidget {
   const EditAccount({super.key});
@@ -149,6 +167,7 @@ class _EditAccountState extends State<EditAccount> {
                   child: Container(
                     child: Column(
                       children: [
+<<<<<<< HEAD
                         InputText(
                           controller: _firstNameController,
                           labelText: "First Name",
@@ -168,6 +187,117 @@ class _EditAccountState extends State<EditAccount> {
                         InputText(
                           controller: _addressController,
                           labelText: "Address",
+=======
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 15.0, right: 15, bottom: 10),
+                          child: TextFormField(
+                            controller: firstNameController,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(25.0)),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10.0,
+                                  horizontal:
+                                      15.0), // Adjust these values as needed
+                              labelText: "First Name",
+                              labelStyle: TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 15.0, right: 15, bottom: 10),
+                          child: TextFormField(
+                            controller: lastNameController,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(25.0)),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10.0,
+                                  horizontal:
+                                      20.0), // Adjust these values as needed
+                              labelText: "Last Name",
+                              labelStyle: TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 15.0, right: 15, bottom: 10),
+                          child: TextFormField(
+                            controller: addressController,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(25.0)),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10.0,
+                                  horizontal:
+                                      20.0), // Adjust these values as needed
+                              labelText: "Address",
+                              labelStyle: TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 15.0, right: 15, bottom: 10),
+                          child: TextFormField(
+                            controller: nicNumberController,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(25.0)),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10.0,
+                                  horizontal:
+                                      20.0), // Adjust these values as needed
+                              labelText: "NIC Number",
+                              labelStyle: TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 15.0, right: 15, bottom: 10),
+                          child: TextFormField(
+                            controller: phoneNumberController,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(25.0)),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10.0,
+                                  horizontal:
+                                      20.0), // Adjust these values as needed
+                              labelText: "Phone Number",
+                              labelStyle: TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+>>>>>>> vithu_1
                         ),
                       ],
                     ),
@@ -177,7 +307,11 @@ class _EditAccountState extends State<EditAccount> {
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: TextButton(
+<<<<<<< HEAD
                       onPressed: saveEditedData,
+=======
+                      onPressed: () {},
+>>>>>>> vithu_1
                       style: ButtonStyle(
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(

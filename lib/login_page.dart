@@ -4,7 +4,10 @@ import 'package:harvest_buddy/home_page.dart';
 import 'package:harvest_buddy/landing_page.dart';
 import 'package:harvest_buddy/signup_page.dart';
 import 'package:harvest_buddy/widgets/my_textfield.dart';
+<<<<<<< HEAD
 // import 'constant.dart';
+=======
+>>>>>>> vithu_1
 
 class LoginScreen extends StatefulWidget {
   final Function()? onTap;
@@ -163,8 +166,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       backgroundColor: MaterialStateProperty.all<Color>(
+<<<<<<< HEAD
                         const Color(
                             0xFF003C3C), // Set the color without transparency
+=======
+                        const Color(0xFF003C3C), // Set the color without transparency
+>>>>>>> vithu_1
                       ),
                     ),
                     child: const Text(

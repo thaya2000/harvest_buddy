@@ -121,7 +121,11 @@ class HomePageContent extends StatelessWidget {
                                 controller: locationController,
                                 focusNode: locationFocusNode,
                                 decoration: InputDecoration(
+<<<<<<< HEAD
                                   labelText: 'Enter Your Paddy Land Location',
+=======
+                                  labelText: 'Enter Your Paddy Land Area',
+>>>>>>> vithu_1
                                   suffixIcon: const Icon(Icons.location_on),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20.0),

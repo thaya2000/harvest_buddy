@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+=======
+import 'package:harvest_buddy/search_harvester_page.dart';
+>>>>>>> vithu_1
 
 class SchedulePage extends StatefulWidget {
   const SchedulePage({super.key});
@@ -244,7 +248,17 @@ class _LoginScreenState extends State<SchedulePage> {
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: TextButton(
+<<<<<<< HEAD
                       onPressed: () {},
+=======
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SearchHarvester()),
+                        );
+                      },
+>>>>>>> vithu_1
                       style: ButtonStyle(
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
