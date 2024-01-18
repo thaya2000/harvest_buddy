@@ -35,7 +35,7 @@ class _TimeSlotState extends State<TimeSlot> {
           child: Text(
             widget.timeSlot,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 12,
               color: Colors.black,
             ),

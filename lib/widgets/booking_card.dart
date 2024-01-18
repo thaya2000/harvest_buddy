@@ -20,7 +20,7 @@ class BookingCard extends StatelessWidget {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 2,
               blurRadius: 5,
-              offset: Offset(0, 2),
+              offset: const Offset(0, 2),
             ),
           ],
         ),
@@ -29,11 +29,11 @@ class BookingCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 10.0, top: 10, right: 10),
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Color.fromARGB(255, 215, 233, 245)),
-                child: Column(
+                    color: const Color.fromARGB(255, 215, 233, 245)),
+                child: const Column(
                   children: <Widget>[
                     Align(
                         alignment: AlignmentDirectional.centerStart,
@@ -46,11 +46,11 @@ class BookingCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 10.0, top: 10, right: 10),
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Color.fromARGB(255, 253, 238, 219)),
-                child: Column(
+                    color: const Color.fromARGB(255, 253, 238, 219)),
+                child: const Column(
                   children: <Widget>[
                     Align(
                         alignment: AlignmentDirectional.centerStart,
@@ -63,11 +63,11 @@ class BookingCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 10.0, top: 10, right: 10),
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Color.fromARGB(255, 27, 180, 14)),
-                child: Column(
+                    color: const Color.fromARGB(255, 27, 180, 14)),
+                child: const Column(
                   children: <Widget>[
                     Align(
                         alignment: AlignmentDirectional.centerStart,
@@ -97,12 +97,12 @@ class BookingCard extends StatelessWidget {
                       const EdgeInsets.only(left: 10.0, top: 10, right: 10),
                   child: Container(
                     width: 120,
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         border: Border.all(width: 1),
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.white),
-                    child: Column(
+                    child: const Column(
                       children: <Widget>[
                         Align(
                             alignment: AlignmentDirectional.centerStart,
@@ -117,12 +117,12 @@ class BookingCard extends StatelessWidget {
                       const EdgeInsets.only(left: 10.0, top: 10, right: 10),
                   child: Container(
                     width: 120,
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         border: Border.all(width: 1),
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.white),
-                    child: Column(
+                    child: const Column(
                       children: <Widget>[
                         Align(
                             alignment: AlignmentDirectional.centerStart,
@@ -137,30 +137,30 @@ class BookingCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 40.0, bottom: 10),
               child: Center(
-                child: Container(
+                child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.4,
                   child: TextButton(
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ConfirmBooking()),
+                            builder: (context) => const ConfirmBooking()),
                       );
                     },
-                    child: Text(
-                      "Book now",
-                      style: TextStyle(
-                        color: Colors.white, // Set the text color to white
-                      ),
-                    ),
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
+                        const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(15)),
                         ),
                       ),
                       backgroundColor: MaterialStateProperty.all<Color>(
                         Colors.red, // Set the color without transparency
+                      ),
+                    ),
+                    child: const Text(
+                      "Book now",
+                      style: TextStyle(
+                        color: Colors.white, // Set the text color to white
                       ),
                     ),
                   ),

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/edit_account_page.dart';
 import 'package:harvest_buddy/landing_page.dart';
-import 'package:harvest_buddy/signup_page.dart';
 import 'constant.dart';
 
 class AccountPage extends StatefulWidget {
-  AccountPage({super.key});
+  const AccountPage({super.key});
 
   @override
   State<AccountPage> createState() => _LoginScreenState();
@@ -20,12 +19,12 @@ class _LoginScreenState extends State<AccountPage> {
     double width = MediaQuery.of(context).size.width;
 
     // Define text styles
-    TextStyle appNameStyle = TextStyle(
+    TextStyle appNameStyle = const TextStyle(
       fontSize: 45.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60),
     );
-    TextStyle profileName = TextStyle(
+    TextStyle profileName = const TextStyle(
       fontSize: 15.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60),
@@ -87,7 +86,7 @@ class _LoginScreenState extends State<AccountPage> {
                             spreadRadius:
                                 2, // how much the shadow should spread
                             blurRadius: 5, // how blurry the shadow should be
-                            offset: Offset(0, 2), // changes the shadow position
+                            offset: const Offset(0, 2), // changes the shadow position
                           ),
                         ],
                       ),
@@ -96,14 +95,14 @@ class _LoginScreenState extends State<AccountPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => EditAccount()),
+                                builder: (context) => const EditAccount()),
                           );
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.edit,
                           size: 20,
                         ),
-                        label: Text("Edit account"),
+                        label: const Text("Edit account"),
                       ),
                     ),
                   ),
@@ -118,7 +117,7 @@ class _LoginScreenState extends State<AccountPage> {
                           color: Colors.grey.withOpacity(0.5), // shadow color
                           spreadRadius: 2, // how much the shadow should spread
                           blurRadius: 5, // how blurry the shadow should be
-                          offset: Offset(0, 2), // changes the shadow position
+                          offset: const Offset(0, 2), // changes the shadow position
                         ),
                       ],
                     ),
@@ -126,11 +125,11 @@ class _LoginScreenState extends State<AccountPage> {
                       onPressed: () {
                         // Handle the delete account button press
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.delete,
                         size: 20,
                       ),
-                      label: Text("Delete account"),
+                      label: const Text("Delete account"),
                     ),
                   ),
                 ],
@@ -139,26 +138,26 @@ class _LoginScreenState extends State<AccountPage> {
             Padding(
               padding: const EdgeInsets.only(top: 150.0),
               child: Center(
-                child: Container(
+                child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.3,
                   child: TextButton(
                     onPressed: () {
                       _showLogoutConfirmationDialog(context);
                     },
-                    child: Text(
-                      "Log out",
-                      style: TextStyle(
-                        color: Colors.white, // Set the text color to white
-                      ),
-                    ),
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
+                        const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(15)),
                         ),
                       ),
                       backgroundColor: MaterialStateProperty.all<Color>(
                         Colors.red, // Set the color without transparency
+                      ),
+                    ),
+                    child: const Text(
+                      "Log out",
+                      style: TextStyle(
+                        color: Colors.white, // Set the text color to white
                       ),
                     ),
                   ),
@@ -176,14 +175,14 @@ class _LoginScreenState extends State<AccountPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Confirm Logout'),
-          content: Text('Are you sure you want to log out?'),
+          title: const Text('Confirm Logout'),
+          content: const Text('Are you sure you want to log out?'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
@@ -191,10 +190,10 @@ class _LoginScreenState extends State<AccountPage> {
                 Navigator.of(context).pop(); // Close the dialog
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => LandingPage()),
+                  MaterialPageRoute(builder: (context) => const LandingPage()),
                 );
               },
-              child: Text('Logout'),
+              child: const Text('Logout'),
             ),
           ],
         );

@@ -3,17 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:harvest_buddy/account_page.dart';
 import 'package:harvest_buddy/activity_page.dart';
 import 'package:harvest_buddy/harvester_availability.dart';
-import 'package:harvest_buddy/login_page.dart';
-import 'package:harvest_buddy/schedule_page.dart';
-import 'package:harvest_buddy/search_harvester_page.dart';
 import 'package:harvest_buddy/widgets/activity_card_service_provider.dart';
-import 'package:harvest_buddy/widgets/high_rated_card.dart';
 import 'package:harvest_buddy/widgets/time_slot.dart';
-import 'constant.dart';
-import 'signup_page.dart';
 
 class HomeServiceProvider extends StatefulWidget {
-  HomeServiceProvider({super.key});
+  const HomeServiceProvider({super.key});
 
   @override
   State<HomeServiceProvider> createState() => _HomePageState();
@@ -24,9 +18,9 @@ class _HomePageState extends State<HomeServiceProvider> {
 
   final List<Widget> _pages = [
     HomeContentServiceProvider(),
-    HarvesterAvailability(),
-    ActivityScreen(),
-    AccountPage(),
+    const HarvesterAvailability(),
+    const ActivityScreen(),
+    const AccountPage(),
   ];
 
   @override
@@ -43,8 +37,8 @@ class _HomePageState extends State<HomeServiceProvider> {
       ),
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.transparent,
-        color: Color.fromARGB(255, 0, 200, 200),
-        items: <Widget>[
+        color: const Color.fromARGB(255, 0, 200, 200),
+        items: const <Widget>[
           Icon(Icons.home, size: 30),
           Icon(Icons.event, size: 30),
           Icon(Icons.list, size: 30),
@@ -65,6 +59,8 @@ class HomeContentServiceProvider extends StatelessWidget {
   TextEditingController locationController = TextEditingController();
   DateTime? selectedDate;
 
+  HomeContentServiceProvider({super.key});
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -75,12 +71,12 @@ class HomeContentServiceProvider extends StatelessWidget {
     FocusNode dateFocusNode = FocusNode();
 
     // Define text styles
-    TextStyle appNameStyle = TextStyle(
+    TextStyle appNameStyle = const TextStyle(
       fontSize: 24.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60), // Set a fully opaque color
     );
-    TextStyle h1style = TextStyle(
+    TextStyle h1style = const TextStyle(
       fontSize: 20.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60), // Set a fully opaque color
@@ -113,7 +109,7 @@ class HomeContentServiceProvider extends StatelessWidget {
                     style: h1style,
                   ),
                 ),
-                Center(
+                const Center(
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Column(
@@ -150,8 +146,8 @@ class HomeContentServiceProvider extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 20, top: 10),
-                  child: Row(
+                  padding: const EdgeInsets.only(left: 20, top: 10),
+                  child: const Row(
                     children: [
                       TimeSlot(
                         timeSlot: "Morning Slot",
@@ -166,7 +162,7 @@ class HomeContentServiceProvider extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 70, top: 10),
+                  padding: const EdgeInsets.only(left: 70, top: 10),
                   child: Row(
                     children: [
                       Container(
@@ -179,10 +175,10 @@ class HomeContentServiceProvider extends StatelessWidget {
                           borderRadius:
                               BorderRadius.circular(5), // Add border radius
                         ),
-                        margin: EdgeInsets.only(right: 8),
+                        margin: const EdgeInsets.only(right: 8),
                       ),
-                      Text("Not Selected"),
-                      SizedBox(width: 16),
+                      const Text("Not Selected"),
+                      const SizedBox(width: 16),
                       Container(
                         width: 20,
                         height: 20,
@@ -193,9 +189,9 @@ class HomeContentServiceProvider extends StatelessWidget {
                           borderRadius:
                               BorderRadius.circular(5), // Add border radius
                         ),
-                        margin: EdgeInsets.only(right: 8),
+                        margin: const EdgeInsets.only(right: 8),
                       ),
-                      Text("Selected"),
+                      const Text("Selected"),
                     ],
                   ),
                 ),
@@ -210,7 +206,7 @@ class HomeContentServiceProvider extends StatelessWidget {
                       height: width * 0.1,
                       child: TextButton(
                         onPressed: () {},
-                        child: Text(
+                        child: const Text(
                           "Confirm",
                           style: TextStyle(
                             color: Colors.white, // Set the text color to white

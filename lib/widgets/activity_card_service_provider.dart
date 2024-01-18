@@ -20,12 +20,12 @@ class ActivityCardServiceProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
-    TextStyle h1style = TextStyle(
+    TextStyle h1style = const TextStyle(
       fontSize: 18.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60),
     );
-    TextStyle h2style = TextStyle(
+    TextStyle h2style = const TextStyle(
       fontSize: 12.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60),
@@ -44,7 +44,7 @@ class ActivityCardServiceProvider extends StatelessWidget {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 2,
               blurRadius: 5,
-              offset: Offset(0, 2),
+              offset: const Offset(0, 2),
             ),
           ],
         ),
@@ -108,7 +108,7 @@ class ActivityCardServiceProvider extends StatelessWidget {
                   height: width * 0.1,
                   child: TextButton(
                     onPressed: () {},
-                    child: Text(
+                    child: const Text(
                       "Completed",
                       style: TextStyle(
                         color: Colors.white,

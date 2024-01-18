@@ -146,7 +146,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LandingPage()),
+                                  builder: (context) => const LandingPage()),
                             );
                           },
                         ),
@@ -235,7 +235,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       });
                     },
                   ),
-                  Text('Create account as Service Provider'),
+                  const Text('Create account as Service Provider'),
                 ],
               ),
               Padding(
@@ -257,7 +257,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
               Center(
-                child: Container(
+                child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.6,
                   child: TextButton(
                     onPressed: signUserUp,
@@ -281,11 +281,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text("Already have an account?"),
+                    const Text("Already have an account?"),
                     Align(
                       child: TextButton(
                         onPressed: () {

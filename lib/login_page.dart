@@ -4,7 +4,6 @@ import 'package:harvest_buddy/home_page.dart';
 import 'package:harvest_buddy/landing_page.dart';
 import 'package:harvest_buddy/signup_page.dart';
 import 'package:harvest_buddy/widgets/my_textfield.dart';
-import 'constant.dart';
 
 class LoginScreen extends StatefulWidget {
   final Function()? onTap;
@@ -41,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => const HomePage()),
       );
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
@@ -79,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
     double width = MediaQuery.of(context).size.width;
 
     // Define text styles
-    TextStyle appNameStyle = TextStyle(
+    TextStyle appNameStyle = const TextStyle(
       fontSize: 45.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60),
@@ -103,12 +102,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     Row(
                       children: [
                         IconButton(
-                          icon: Icon(Icons.arrow_back),
+                          icon: const Icon(Icons.arrow_back),
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LandingPage()),
+                                  builder: (context) => const LandingPage()),
                             );
                           },
                         ),
@@ -145,28 +144,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () {},
-                  child: Text("Forgot password?"),
+                  child: const Text("Forgot password?"),
                 ),
               ),
               Center(
-                child: Container(
+                child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.6,
                   child: TextButton(
                     onPressed: signIn,
-                    child: Text(
-                      "Log in",
-                      style: TextStyle(
-                        color: Colors.white, // Set the text color to white
-                      ),
-                    ),
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
+                        const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
                       ),
                       backgroundColor: MaterialStateProperty.all<Color>(
-                        Color(0xFF003C3C), // Set the color without transparency
+                        const Color(0xFF003C3C), // Set the color without transparency
+                      ),
+                    ),
+                    child: const Text(
+                      "Log in",
+                      style: TextStyle(
+                        color: Colors.white, // Set the text color to white
                       ),
                     ),
                   ),
@@ -177,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text("Don't have an account?"),
+                    const Text("Don't have an account?"),
                     Align(
                       child: TextButton(
                           onPressed: () {
@@ -189,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       )),
                             );
                           },
-                          child: Text("Create account")),
+                          child: const Text("Create account")),
                     ),
                   ],
                 ),

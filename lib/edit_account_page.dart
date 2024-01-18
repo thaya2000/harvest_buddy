@@ -2,20 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:harvest_buddy/constant.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: EditAccount(),
     );
   }
 }
 
 class EditAccount extends StatefulWidget {
-  EditAccount({super.key});
+  const EditAccount({super.key});
 
   @override
   State<EditAccount> createState() => _LoginScreenState();
@@ -49,7 +51,7 @@ class _LoginScreenState extends State<EditAccount> {
         TextEditingController(text: phoneNumberDefaultValue);
 
     // Define text styles
-    TextStyle profileName = TextStyle(
+    TextStyle profileName = const TextStyle(
       fontSize: 15.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60),
@@ -109,7 +111,7 @@ class _LoginScreenState extends State<EditAccount> {
                               left: 15.0, right: 15, bottom: 10),
                           child: TextFormField(
                             controller: firstNameController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.grey),
                                 borderRadius:
@@ -131,7 +133,7 @@ class _LoginScreenState extends State<EditAccount> {
                               left: 15.0, right: 15, bottom: 10),
                           child: TextFormField(
                             controller: lastNameController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.grey),
                                 borderRadius:
@@ -153,7 +155,7 @@ class _LoginScreenState extends State<EditAccount> {
                               left: 15.0, right: 15, bottom: 10),
                           child: TextFormField(
                             controller: addressController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.grey),
                                 borderRadius:
@@ -175,7 +177,7 @@ class _LoginScreenState extends State<EditAccount> {
                               left: 15.0, right: 15, bottom: 10),
                           child: TextFormField(
                             controller: nicNumberController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.grey),
                                 borderRadius:
@@ -197,7 +199,7 @@ class _LoginScreenState extends State<EditAccount> {
                               left: 15.0, right: 15, bottom: 10),
                           child: TextFormField(
                             controller: phoneNumberController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.grey),
                                 borderRadius:
@@ -219,26 +221,26 @@ class _LoginScreenState extends State<EditAccount> {
                   ),
                 ),
                 Center(
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: TextButton(
                       onPressed: () {},
-                      child: Text(
-                        "Save changes",
-                        style: TextStyle(
-                          color: Colors.white, // Set the text color to white
-                        ),
-                      ),
                       style: ButtonStyle(
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
+                          const RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(20)),
                           ),
                         ),
                         backgroundColor: MaterialStateProperty.all<Color>(
-                          Color(
+                          const Color(
                               0xFF003C3C), // Set the color without transparency
+                        ),
+                      ),
+                      child: const Text(
+                        "Save changes",
+                        style: TextStyle(
+                          color: Colors.white, // Set the text color to white
                         ),
                       ),
                     ),

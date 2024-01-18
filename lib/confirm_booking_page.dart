@@ -1,15 +1,8 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:harvest_buddy/login_page.dart';
-import 'package:harvest_buddy/widgets/activity_card.dart';
-import 'package:harvest_buddy/widgets/booking_card.dart';
-import 'package:harvest_buddy/widgets/high_rated_card.dart';
 import 'package:harvest_buddy/widgets/time_slot.dart';
-import 'constant.dart';
-import 'signup_page.dart';
 
 class ConfirmBooking extends StatefulWidget {
-  ConfirmBooking({super.key});
+  const ConfirmBooking({super.key});
 
   @override
   State<ConfirmBooking> createState() => _HomePageState();
@@ -25,12 +18,12 @@ class _HomePageState extends State<ConfirmBooking> {
     double width = MediaQuery.of(context).size.width;
 
     // Define text styles
-    TextStyle appNameStyle = TextStyle(
+    TextStyle appNameStyle = const TextStyle(
       fontSize: 17.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60), // Set a fully opaque color
     );
-    TextStyle h1style = TextStyle(
+    TextStyle h1style = const TextStyle(
       fontSize: 12.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60), // Set a fully opaque color
@@ -40,9 +33,9 @@ class _HomePageState extends State<ConfirmBooking> {
       extendBody: true,
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-          backgroundColor: Color.fromARGB(
+          backgroundColor: const Color.fromARGB(
               255, 0, 120, 120), // Set your desired background color
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               bottomLeft:
                   Radius.circular(20.0), // Set your desired bottom-left radius
@@ -51,7 +44,7 @@ class _HomePageState extends State<ConfirmBooking> {
             ),
           ),
           title: Container(
-            child: Column(
+            child: const Column(
               children: [
                 Text(
                   "Mallavi",
@@ -75,7 +68,7 @@ class _HomePageState extends State<ConfirmBooking> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               alignment: AlignmentDirectional.center,
               child: Column(
                 children: [
@@ -112,35 +105,35 @@ class _HomePageState extends State<ConfirmBooking> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(10)),
                     height: 50,
-                    child: Center(child: Text("Sold Out")),
+                    child: const Center(child: Text("Sold Out")),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     height: 50,
                     decoration: BoxDecoration(
                         color: Colors.orange,
                         borderRadius: BorderRadius.circular(10)),
-                    child: Center(child: Text("Pending")),
+                    child: const Center(child: Text("Pending")),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     height: 50,
                     decoration: BoxDecoration(
                         color: Colors.green,
                         borderRadius: BorderRadius.circular(10)),
-                    child: Center(child: Text("Selected")),
+                    child: const Center(child: Text("Selected")),
                   ),
                 ],
               ),
             ),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TimeSlot(
@@ -151,12 +144,12 @@ class _HomePageState extends State<ConfirmBooking> {
                 )
               ],
             ),
-            TimeSlot(
+            const TimeSlot(
               timeSlot: "Evening Slot",
             ),
             Padding(
               padding: const EdgeInsets.only(top: 40.0),
-              child: Container(
+              child: SizedBox(
                 height: height * 0.08,
                 width: width * 0.9,
                 child: Material(
@@ -164,14 +157,14 @@ class _HomePageState extends State<ConfirmBooking> {
                   child: TextField(
                     decoration: InputDecoration(
                       labelText: 'Enter you paddy field location',
-                      suffixIcon: Icon(Icons.location_on),
+                      suffixIcon: const Icon(Icons.location_on),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),
-                        borderSide: BorderSide(color: Colors.grey),
+                        borderSide: const BorderSide(color: Colors.grey),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),
-                        borderSide: BorderSide(color: Colors.blue),
+                        borderSide: const BorderSide(color: Colors.blue),
                       ),
                     ),
                   ),
@@ -189,7 +182,7 @@ class _HomePageState extends State<ConfirmBooking> {
                 height: MediaQuery.of(context).size.width * 0.1,
                 child: TextButton(
                   onPressed: () {},
-                  child: Text(
+                  child: const Text(
                     "Confirm booking",
                     style: TextStyle(
                       color: Colors.white, // Set the text color to white

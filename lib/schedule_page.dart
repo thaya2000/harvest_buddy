@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:harvest_buddy/landing_page.dart';
-import 'package:harvest_buddy/login_page.dart';
 import 'package:harvest_buddy/search_harvester_page.dart';
-import 'constant.dart';
 
 class SchedulePage extends StatefulWidget {
-  SchedulePage({super.key});
+  const SchedulePage({super.key});
 
   @override
   State<SchedulePage> createState() => _LoginScreenState();
@@ -21,7 +18,7 @@ class _LoginScreenState extends State<SchedulePage> {
 
     TextEditingController dateController = TextEditingController();
 
-    String dropdown_area = [
+    String dropdownArea = [
       "select the area",
       "Mullaitivu",
       "Jaffna",
@@ -29,13 +26,13 @@ class _LoginScreenState extends State<SchedulePage> {
       "Vavuniya",
       "Mannar"
     ][0];
-    String dropdown_time_slot = [
+    String dropdownTimeSlot = [
       "select the time slot",
       "Morning slot",
       "Afternoon slot",
       "Evening slot"
     ][0];
-    String dropdown_machine_type = [
+    String dropdownMachineType = [
       "select the machine type",
       "Kubota 70G",
       "Kubota 70G+",
@@ -48,7 +45,7 @@ class _LoginScreenState extends State<SchedulePage> {
     ][0];
 
     // Define text styles
-    TextStyle appNameStyle = TextStyle(
+    TextStyle appNameStyle = const TextStyle(
       fontSize: 24.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60),
@@ -77,11 +74,11 @@ class _LoginScreenState extends State<SchedulePage> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Container(
+                    child: SizedBox(
                       height: height * 0.08, // Set your desired height
                       width: width * 0.9, // Set your desired width
                       child: DropdownButtonFormField<String>(
-                        value: dropdown_area,
+                        value: dropdownArea,
                         items: [
                           "select the area",
                           "Mullaitivu",
@@ -97,18 +94,18 @@ class _LoginScreenState extends State<SchedulePage> {
                         }).toList(),
                         onChanged: (value) {
                           setState(() {
-                            dropdown_area = value!;
+                            dropdownArea = value!;
                           });
                         },
                         decoration: InputDecoration(
                           labelText: "Area",
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.0),
-                            borderSide: BorderSide(color: Colors.grey),
+                            borderSide: const BorderSide(color: Colors.grey),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.0),
-                            borderSide: BorderSide(color: Colors.blue),
+                            borderSide: const BorderSide(color: Colors.blue),
                           ),
                         ),
                         // Set initial value to null to have no initial selection
@@ -118,7 +115,7 @@ class _LoginScreenState extends State<SchedulePage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Container(
+                    child: SizedBox(
                       height: height * 0.08,
                       width: width * 0.9,
                       child: Material(
@@ -131,7 +128,7 @@ class _LoginScreenState extends State<SchedulePage> {
                               context: context,
                               initialDate: DateTime.now(),
                               firstDate: DateTime.now(),
-                              lastDate: DateTime.now().add(Duration(days: 365)),
+                              lastDate: DateTime.now().add(const Duration(days: 365)),
                             );
 
                             if (pickedDate != null &&
@@ -143,14 +140,14 @@ class _LoginScreenState extends State<SchedulePage> {
                           },
                           decoration: InputDecoration(
                             labelText: "Date",
-                            suffixIcon: Icon(Icons.calendar_today),
+                            suffixIcon: const Icon(Icons.calendar_today),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              borderSide: BorderSide(color: Colors.grey),
+                              borderSide: const BorderSide(color: Colors.grey),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              borderSide: BorderSide(color: Colors.blue),
+                              borderSide: const BorderSide(color: Colors.blue),
                             ),
                           ),
                         ),
@@ -159,11 +156,11 @@ class _LoginScreenState extends State<SchedulePage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Container(
+                    child: SizedBox(
                       height: height * 0.08, // Set your desired height
                       width: width * 0.9, // Set your desired width
                       child: DropdownButtonFormField<String>(
-                        value: dropdown_time_slot,
+                        value: dropdownTimeSlot,
                         items: [
                           "select the time slot",
                           "Morning slot",
@@ -177,18 +174,18 @@ class _LoginScreenState extends State<SchedulePage> {
                         }).toList(),
                         onChanged: (value) {
                           setState(() {
-                            dropdown_time_slot = value!;
+                            dropdownTimeSlot = value!;
                           });
                         },
                         decoration: InputDecoration(
                           labelText: "Time Slot",
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.0),
-                            borderSide: BorderSide(color: Colors.grey),
+                            borderSide: const BorderSide(color: Colors.grey),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.0),
-                            borderSide: BorderSide(color: Colors.blue),
+                            borderSide: const BorderSide(color: Colors.blue),
                           ),
                         ),
                         // Set initial value to null to have no initial selection
@@ -198,11 +195,11 @@ class _LoginScreenState extends State<SchedulePage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Container(
+                    child: SizedBox(
                       height: height * 0.08, // Set your desired height
                       width: width * 0.9, // Set your desired width
                       child: DropdownButtonFormField<String>(
-                        value: dropdown_machine_type,
+                        value: dropdownMachineType,
                         items: [
                           "select the machine type",
                           "Kubota 70G",
@@ -221,18 +218,18 @@ class _LoginScreenState extends State<SchedulePage> {
                         }).toList(),
                         onChanged: (value) {
                           setState(() {
-                            dropdown_machine_type = value!;
+                            dropdownMachineType = value!;
                           });
                         },
                         decoration: InputDecoration(
                           labelText: "Machine Type",
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.0),
-                            borderSide: BorderSide(color: Colors.grey),
+                            borderSide: const BorderSide(color: Colors.grey),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.0),
-                            borderSide: BorderSide(color: Colors.blue),
+                            borderSide: const BorderSide(color: Colors.blue),
                           ),
                         ),
                         // Set initial value to null to have no initial selection
@@ -245,31 +242,31 @@ class _LoginScreenState extends State<SchedulePage> {
               Padding(
                 padding: const EdgeInsets.only(top: 40.0),
                 child: Center(
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: TextButton(
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SearchHarvester()),
+                              builder: (context) => const SearchHarvester()),
                         );
                       },
-                      child: Text(
-                        "Search harvester",
-                        style: TextStyle(
-                          color: Colors.white, // Set the text color to white
-                        ),
-                      ),
                       style: ButtonStyle(
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
+                          const RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(15)),
                           ),
                         ),
                         backgroundColor: MaterialStateProperty.all<Color>(
                           Colors.red, // Set the color without transparency
+                        ),
+                      ),
+                      child: const Text(
+                        "Search harvester",
+                        style: TextStyle(
+                          color: Colors.white, // Set the text color to white
                         ),
                       ),
                     ),

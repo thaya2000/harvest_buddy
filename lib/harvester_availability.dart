@@ -9,13 +9,13 @@ class HarvesterAvailability extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    TextStyle appNameStyle = TextStyle(
+    TextStyle appNameStyle = const TextStyle(
       fontSize: 24.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60),
     );
 
-    TextStyle h1style = TextStyle(
+    TextStyle h1style = const TextStyle(
       fontSize: 20.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60),
@@ -56,7 +56,7 @@ class HarvesterAvailability extends StatelessWidget {
                       style: h1style,
                     ),
                   ),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -76,7 +76,7 @@ class HarvesterAvailability extends StatelessWidget {
             }),
           ),
           Container(
-            padding: EdgeInsets.only(left: 70, top: 50.0),
+            padding: const EdgeInsets.only(left: 70, top: 50.0),
             child: Row(
               children: [
                 Container(
@@ -87,10 +87,10 @@ class HarvesterAvailability extends StatelessWidget {
                     border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  margin: EdgeInsets.only(right: 8),
+                  margin: const EdgeInsets.only(right: 8),
                 ),
-                Text("Not Selected"),
-                SizedBox(width: 16),
+                const Text("Not Selected"),
+                const SizedBox(width: 16),
                 Container(
                   width: 20,
                   height: 20,
@@ -99,9 +99,9 @@ class HarvesterAvailability extends StatelessWidget {
                     border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  margin: EdgeInsets.only(right: 8),
+                  margin: const EdgeInsets.only(right: 8),
                 ),
-                Text("Selected"),
+                const Text("Selected"),
               ],
             ),
           ),
@@ -117,7 +117,7 @@ class HarvesterAvailability extends StatelessWidget {
                 height: width * 0.1,
                 child: TextButton(
                   onPressed: () {},
-                  child: Text(
+                  child: const Text(
                     "Save Changes",
                     style: TextStyle(
                       color: Colors.white,

@@ -4,7 +4,7 @@ import 'constant.dart';
 import 'signup_page.dart';
 
 class LandingPage extends StatefulWidget {
-  LandingPage({super.key});
+  const LandingPage({super.key});
 
   @override
   State<LandingPage> createState() => _LoginScreenState();
@@ -19,13 +19,13 @@ class _LoginScreenState extends State<LandingPage> {
     double width = MediaQuery.of(context).size.width;
 
     // Define text styles
-    TextStyle appNameStyle = TextStyle(
+    TextStyle appNameStyle = const TextStyle(
       fontSize: 34.0,
       fontWeight: FontWeight.bold,
       color: Color.fromARGB(255, 0, 60, 60), // Set a fully opaque color
     );
 
-    TextStyle sloganStyle = TextStyle(
+    TextStyle sloganStyle = const TextStyle(
       fontSize: 12.0,
       fontStyle: FontStyle.italic,
       color: Colors.grey, // Example color
@@ -74,15 +74,15 @@ class _LoginScreenState extends State<LandingPage> {
                             style: sloganStyle,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(35.0),
+                        const Padding(
+                          padding: EdgeInsets.all(35.0),
                           child: Text(
                             "Discover fresh and sustainable products from local farmers delivered to your doorstep.",
                             textAlign: TextAlign.center,
                           ),
                         ),
                         Center(
-                          child: Container(
+                          child: SizedBox(
                             width: MediaQuery.of(context).size.width * 0.6,
                             child: TextButton(
                               onPressed: () {
@@ -94,25 +94,25 @@ class _LoginScreenState extends State<LandingPage> {
                                           )),
                                 );
                               },
-                              child: Text(
-                                "Create account",
-                                style: TextStyle(
-                                  color: Colors
-                                      .white, // Set the text color to white
-                                ),
-                              ),
                               style: ButtonStyle(
                                 shape: MaterialStateProperty.all<
                                     RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
+                                  const RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)),
                                   ),
                                 ),
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
-                                  Color(
+                                  const Color(
                                       0xFF003C3C), // Set the color without transparency
+                                ),
+                              ),
+                              child: const Text(
+                                "Create account",
+                                style: TextStyle(
+                                  color: Colors
+                                      .white, // Set the text color to white
                                 ),
                               ),
                             ),
@@ -123,7 +123,7 @@ class _LoginScreenState extends State<LandingPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Text("Already have an account?"),
+                              const Text("Already have an account?"),
                               Align(
                                 child: TextButton(
                                     onPressed: () {
@@ -135,7 +135,7 @@ class _LoginScreenState extends State<LandingPage> {
                                                 )),
                                       );
                                     },
-                                    child: Text("Sign in")),
+                                    child: const Text("Sign in")),
                               ),
                             ],
                           ),
