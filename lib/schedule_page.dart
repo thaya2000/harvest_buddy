@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class SchedulePage extends StatefulWidget {
   const SchedulePage({super.key});
-  const SchedulePage({super.key});
 
   @override
   State<SchedulePage> createState() => _LoginScreenState();
