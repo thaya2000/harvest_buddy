@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:harvest_buddy/landing_page.dart';
 import 'package:harvest_buddy/login_page.dart';
 import 'package:harvest_buddy/widgets/my_textfield.dart';
-import '../models/user.dart' as model;
+import 'models/User.dart' as auth;
+import 'models/farmer.dart';
+import 'models/ServiceProvider.dart';
 
 class SignUpScreen extends StatefulWidget {
   final Function()? onTap;
@@ -15,6 +17,8 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  bool isChecked = false;
+
   final emailController = TextEditingController(text: "default1@example.com");
   final passwordController = TextEditingController(text: "asd123");
   final confirmPasswordController = TextEditingController(text: "asd123");
@@ -24,10 +28,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
       TextEditingController(text: "N012, Hapugala, Galle.");
   final phoneNumberController = TextEditingController(text: "+94712345678");
   final nicNoController = TextEditingController(text: "200000000V");
+  final harvesterTypeController = TextEditingController(text: "Kubota 70G+");
+  final ratePerAcreController = TextEditingController(text: "LKR 15000");
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  bool isChecked = false;
+
   void signUserUp() async {
     showDialog(
       context: scaffoldKey.currentContext!,
@@ -82,21 +88,50 @@ class _SignUpScreenState extends State<SignUpScreen> {
     String? userId,
   ) async {
     try {
-      model.User user = model.User(
+      auth.User user = auth.User(
         userId: userId!,
         password: password,
         email: email,
-        firstName: 'Thaya',
-        lastName: 'Theva',
-        address: 'N012, Hapugala, Galle.',
-        phoneNumber: '+94712345678',
-        nicNo: '200000000V',
+        isServiceProvider: isChecked,
       );
 
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userId)
           .set(user.toJson());
+
+      if (isChecked) {
+        ServiceProvider serviceProvider = ServiceProvider(
+          userId: userId,
+          firstName: firstName,
+          lastName: lastName,
+          address: address,
+          phoneNumber: phoneNumber,
+          nicNo: nicNo,
+          harvesterType: harvesterTypeController.text,
+          ratePerAcre: ratePerAcreController.text,
+        );
+
+        await FirebaseFirestore.instance
+            .collection('serviceProviders')
+            .doc(userId)
+            .set(serviceProvider.toJson());
+      } else {
+        Farmer farmer = Farmer(
+          userId: userId,
+          firstName: firstName,
+          lastName: lastName,
+          address: address,
+          phoneNumber: phoneNumber,
+          nicNo: nicNo,
+        );
+
+        await FirebaseFirestore.instance
+            .collection('farmers')
+            .doc(userId)
+            .set(farmer.toJson());
+      }
+
       print('User details uploaded successfully!');
     } catch (e) {
       print('Error uploading user details: $e');
@@ -245,11 +280,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: Column(
                     children: [
                       InputText(
-                        controller: emailController,
+                        controller: harvesterTypeController,
                         labelText: "Harvester Type",
                       ),
                       InputText(
-                        controller: firstNameController,
+                        controller: ratePerAcreController,
                         labelText: "Enter Rate Per Acre",
                       ),
                     ],

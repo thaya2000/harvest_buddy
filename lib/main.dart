@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/account_page.dart';
 import 'package:harvest_buddy/activity_page.dart';
+import 'package:harvest_buddy/auth/auth.dart';
 import 'package:harvest_buddy/edit_account_page.dart';
 import 'schedule_page.dart';
 import 'home_page.dart';
@@ -16,14 +17,15 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(InitialScreen());
+  runApp(const InitialScreen());
 }
 
 class InitialScreen extends StatelessWidget {
+  const InitialScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: LandingPage(),
+    return const MaterialApp(
+      home: AuthPage(),
       title: "HarvestBuddy",
       debugShowCheckedModeBanner: false,
     );

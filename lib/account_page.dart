@@ -1,18 +1,36 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/edit_account_page.dart';
 import 'package:harvest_buddy/landing_page.dart';
 import 'package:harvest_buddy/signup_page.dart';
+import 'package:harvest_buddy/utils/user_profile_helper.dart';
 import 'constant.dart';
 
 class AccountPage extends StatefulWidget {
-  AccountPage({super.key});
+  const AccountPage({super.key});
 
   @override
   State<AccountPage> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<AccountPage> {
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  // GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  late String firstName = "";
+  final UserProfileHelper _profileHelper = UserProfileHelper();
+  @override
+  void initState() {
+    super.initState();
+    fetchProfileName();
+  }
+
+  Future<void> fetchProfileName() async {
+    final Map<String, dynamic> userProfile =
+        await _profileHelper.fetchUserProfile();
+    setState(() {
+      firstName = userProfile['firstName'] + " " + userProfile['lastName'];
+      print(firstName);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +81,7 @@ class _LoginScreenState extends State<AccountPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0),
-                      child: Text("Thevarasa Thayanan", style: profileName),
+                      child: Text(firstName, style: profileName),
                     )
                   ],
                 ),
@@ -124,7 +142,7 @@ class _LoginScreenState extends State<AccountPage> {
                     ),
                     child: TextButton.icon(
                       onPressed: () {
-                        // Handle the delete account button press
+                        _showDeleteAccountConfirmatiomDialog(context);
                       },
                       icon: Icon(
                         Icons.delete,
@@ -142,7 +160,8 @@ class _LoginScreenState extends State<AccountPage> {
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.3,
                   child: TextButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      await FirebaseAuth.instance.signOut();
                       _showLogoutConfirmationDialog(context);
                     },
                     child: Text(
@@ -200,5 +219,62 @@ class _LoginScreenState extends State<AccountPage> {
         );
       },
     );
+  }
+
+  Future<void> _showDeleteAccountConfirmatiomDialog(
+      BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete account'),
+          content: Text('Are you sure you want to delete account?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Perform logout and navigate to LandingPage
+                deleteAccount();
+                Navigator.of(context).pop(); // Close the dialog
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LandingPage()),
+                );
+              },
+              child: Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> deleteAccount() async {
+    try {
+      // await farmersCollection.doc(user.uid).update({
+      //   'firstName': _firstNameController.text,
+      //   'lastName': _lastNameController.text,
+      //   'address': _addressController.text,
+      //   'nicNo': _nicNumberController.text,
+      //   'phoneNumber': _phoneNumberController.text,
+      // });
+
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const AccountPage()),
+      );
+
+      print('Successfully saved');
+
+      // Optional: You can update the local state or perform other actions after saving
+    } catch (e) {
+      print('Error saving edited data: $e');
+    }
   }
 }
