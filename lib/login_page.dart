@@ -4,7 +4,7 @@ import 'package:harvest_buddy/home_page.dart';
 import 'package:harvest_buddy/landing_page.dart';
 import 'package:harvest_buddy/signup_page.dart';
 import 'package:harvest_buddy/widgets/my_textfield.dart';
-import 'constant.dart';
+// import 'constant.dart';
 
 class LoginScreen extends StatefulWidget {
   final Function()? onTap;
@@ -66,12 +66,12 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // @override
-  // void dispose() {
-  //   _emailTextController.dispose();
-  //   _passwordTextController.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _emailTextController.dispose();
+    _passwordTextController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
