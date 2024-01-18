@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
 class ActivityCardServiceProvider extends StatelessWidget {
-  final String date;
-  final String timeSlot;
-  final String customerName;
-  final String paddyLandAddress;
-  final String customerPhoneNumber;
+  final TextEditingController dayController;
+  final TextEditingController timeSlotController;
+  final TextEditingController customerNameController;
+  final TextEditingController paddyLandAddressController;
+  final TextEditingController customerPhoneNumberController;
 
   const ActivityCardServiceProvider({
-    super.key,
-    required this.date,
-    required this.timeSlot,
-    required this.customerName,
-    required this.paddyLandAddress,
-    required this.customerPhoneNumber,
-  });
+    Key? key,
+    required this.dayController,
+    required this.timeSlotController,
+    required this.customerNameController,
+    required this.paddyLandAddressController,
+    required this.customerPhoneNumberController,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +54,13 @@ class ActivityCardServiceProvider extends StatelessWidget {
           children: <Widget>[
             Center(
               child: Text(
-                date,
+                dayController.text,
                 style: h1style,
               ),
             ),
             Center(
               child: Text(
-                timeSlot,
+                timeSlotController.text,
                 style: h2style,
               ),
             ),
@@ -71,7 +71,7 @@ class ActivityCardServiceProvider extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 80.0, top: 5, bottom: 5),
               child: Text(
-                customerName,
+                customerNameController.text,
                 style: h2style,
               ),
             ),
@@ -82,7 +82,7 @@ class ActivityCardServiceProvider extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 80.0, top: 5, bottom: 5),
               child: Text(
-                paddyLandAddress,
+                paddyLandAddressController.text,
                 style: h2style,
               ),
             ),
@@ -93,7 +93,7 @@ class ActivityCardServiceProvider extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 80.0, top: 5, bottom: 5),
               child: Text(
-                customerPhoneNumber,
+                customerPhoneNumberController.text,
                 style: h2style,
               ),
             ),
@@ -102,8 +102,9 @@ class ActivityCardServiceProvider extends StatelessWidget {
               child: Center(
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Colors.green,
-                      borderRadius: BorderRadius.circular(10)),
+                    color: Colors.green,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   width: width * 0.4,
                   height: width * 0.1,
                   child: TextButton(

@@ -7,7 +7,7 @@ import 'package:harvest_buddy/widgets/activity_card_service_provider.dart';
 import 'package:harvest_buddy/widgets/time_slot.dart';
 
 class HomeServiceProvider extends StatefulWidget {
-  const HomeServiceProvider({super.key});
+  const HomeServiceProvider({Key? key}) : super(key: key);
 
   @override
   State<HomeServiceProvider> createState() => _HomePageState();
@@ -25,9 +25,6 @@ class _HomePageState extends State<HomeServiceProvider> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: true,
@@ -55,19 +52,23 @@ class _HomePageState extends State<HomeServiceProvider> {
 }
 
 class HomeContentServiceProvider extends StatelessWidget {
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController locationController = TextEditingController();
-  DateTime? selectedDate;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController locationController = TextEditingController();
+  late DateTime? selectedDate;
 
-  HomeContentServiceProvider({super.key});
+  HomeContentServiceProvider({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    TextEditingController dateController = TextEditingController();
-    FocusNode locationFocusNode = FocusNode();
+    // Create TextEditingController instances
+    TextEditingController dayController = TextEditingController();
+    TextEditingController timeSlotController = TextEditingController();
+    TextEditingController customerNameController = TextEditingController();
+    TextEditingController paddyLandAddressController = TextEditingController();
+    TextEditingController customerPhoneNumberController =
+        TextEditingController();
     FocusNode dateFocusNode = FocusNode();
 
     // Define text styles
@@ -115,19 +116,23 @@ class HomeContentServiceProvider extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         ActivityCardServiceProvider(
-                          date: "2024-02-20",
-                          timeSlot: "Morning Slot",
-                          customerName: "Mr Thayanan",
-                          paddyLandAddress: "10th lake Pandiyankulam",
-                          customerPhoneNumber: "0777123456",
+                          dayController: dayController,
+                          timeSlotController: timeSlotController,
+                          customerNameController: customerNameController,
+                          paddyLandAddressController:
+                              paddyLandAddressController,
+                          customerPhoneNumberController:
+                              customerPhoneNumberController,
                         ),
-                        ActivityCardServiceProvider(
-                          date: "2024-02-20",
-                          timeSlot: "Morning Slot",
-                          customerName: "Mr Thayanan",
-                          paddyLandAddress: "10th lake Pandiyankulam",
-                          customerPhoneNumber: "0777123456",
-                        ),
+                        // ActivityCardServiceProvider(
+                        //   dateController: dateController,
+                        //   timeSlotController: timeSlotController,
+                        //   customerNameController: customerNameController,
+                        //   paddyLandAddressController:
+                        //       paddyLandAddressController,
+                        //   customerPhoneNumberController:
+                        //       customerPhoneNumberController,
+                        // ),
                       ],
                     ),
                   ),
