@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:harvest_buddy/account_page.dart';
 import 'package:harvest_buddy/activity_page.dart';
 import 'package:harvest_buddy/edit_account_page.dart';
+import 'package:harvest_buddy/home_service_provider.dart';
 import 'schedule_page.dart';
 import 'home_page.dart';
 import 'constant.dart';
@@ -23,7 +24,7 @@ class InitialScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: LandingPage(),
+      home: HomeServiceProvider(),
       title: "HarvestBuddy",
       debugShowCheckedModeBanner: false,
     );
