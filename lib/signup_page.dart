@@ -27,7 +27,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
+  bool isChecked = false;
   void signUserUp() async {
     showDialog(
       context: scaffoldKey.currentContext!,
@@ -228,13 +228,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Checkbox(
-                    value: false,
+                    value: isChecked,
                     onChanged: (bool? value) {
-                      // Handle checkbox state
+                      setState(() {
+                        isChecked = value!;
+                      });
                     },
                   ),
-                  const Text('Create account as Service Provider'),
+                  Text('Create account as Service Provider'),
                 ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Visibility(
+                  visible: isChecked,
+                  child: Column(
+                    children: [
+                      InputText(
+                        controller: emailController,
+                        labelText: "Harvester Type",
+                      ),
+                      InputText(
+                        controller: firstNameController,
+                        labelText: "Enter Rate Per Acre",
+                      ),
+                    ],
+                  ),
+                ),
               ),
               Center(
                 child: Container(
