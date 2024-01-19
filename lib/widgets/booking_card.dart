@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/confirm_booking_page.dart';
 
-class BookingCard extends StatefulWidget {
+class BookingCard extends StatelessWidget {
   final String serviceProviderName;
   final String harvesterType;
   final List<String> availableSlots;
@@ -17,11 +17,6 @@ class BookingCard extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
-  @override
-  State<BookingCard> createState() => _BookingCardState();
-}
-
-class _BookingCardState extends State<BookingCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -56,7 +51,7 @@ class _BookingCardState extends State<BookingCard> {
                       alignment: AlignmentDirectional.centerStart,
                       child: Text("Service Provider Name"),
                     ),
-                    Center(child: Text(widget.serviceProviderName)),
+                    Center(child: Text(serviceProviderName)),
                   ],
                 ),
               ),
@@ -75,7 +70,7 @@ class _BookingCardState extends State<BookingCard> {
                       alignment: AlignmentDirectional.centerStart,
                       child: Text("Harvester Type"),
                     ),
-                    Center(child: Text(widget.harvesterType)),
+                    Center(child: Text(harvesterType)),
                   ],
                 ),
               ),
@@ -97,7 +92,7 @@ class _BookingCardState extends State<BookingCard> {
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
-                    for (String slot in widget.availableSlots)
+                    for (String slot in availableSlots)
                       Center(
                         child: Text(
                           slot,
@@ -128,7 +123,7 @@ class _BookingCardState extends State<BookingCard> {
                           alignment: AlignmentDirectional.centerStart,
                           child: Text("Rating"),
                         ),
-                        Center(child: Text(widget.rating.toString())),
+                        Center(child: Text(rating.toString())),
                       ],
                     ),
                   ),
@@ -150,7 +145,7 @@ class _BookingCardState extends State<BookingCard> {
                           alignment: AlignmentDirectional.centerStart,
                           child: Text("Rate Per Acre"),
                         ),
-                        Center(child: Text("LKR ${widget.ratePerAcre}")),
+                        Center(child: Text("LKR $ratePerAcre")),
                       ],
                     ),
                   ),
@@ -168,11 +163,11 @@ class _BookingCardState extends State<BookingCard> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => ConfirmBooking(
-                            serviceProviderName: widget.serviceProviderName,
-                            harvesterType: widget.harvesterType,
-                            availableSlots: widget.availableSlots,
-                            rating: widget.rating,
-                            ratePerAcre: widget.ratePerAcre,
+                            serviceProviderName: serviceProviderName,
+                            harvesterType: harvesterType,
+                            availableSlots: availableSlots,
+                            rating: rating,
+                            ratePerAcre: ratePerAcre,
                           ),
                         ),
                       );
