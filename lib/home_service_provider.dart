@@ -7,7 +7,7 @@ import 'package:harvest_buddy/widgets/activity_card_service_provider.dart';
 import 'package:harvest_buddy/widgets/time_slot.dart';
 
 class HomeServiceProvider extends StatefulWidget {
-  const HomeServiceProvider({super.key});
+  const HomeServiceProvider({Key? key}) : super(key: key);
 
   @override
   State<HomeServiceProvider> createState() => _HomePageState();
@@ -25,9 +25,6 @@ class _HomePageState extends State<HomeServiceProvider> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: true,
@@ -54,21 +51,27 @@ class _HomePageState extends State<HomeServiceProvider> {
   }
 }
 
-class HomeContentServiceProvider extends StatelessWidget {
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController locationController = TextEditingController();
-  DateTime? selectedDate;
+class HomeContentServiceProvider extends StatefulWidget {
+  @override
+  State<HomeContentServiceProvider> createState() =>
+      _HomeContentServiceProviderState();
+}
 
-  HomeContentServiceProvider({super.key});
+class _HomeContentServiceProviderState
+    extends State<HomeContentServiceProvider> {
+  final String dayController = "2021-10-10";
+
+  final String timeSlotController = "Morning Slot";
+
+  final String customerNameController = "Vithusan";
+
+  final String paddyLandAddressController = "123, ABC Road, XYZ City";
+
+  final String customerPhoneNumberController = "1234567890";
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-
-    TextEditingController dateController = TextEditingController();
-    FocusNode locationFocusNode = FocusNode();
-    FocusNode dateFocusNode = FocusNode();
 
     // Define text styles
     TextStyle appNameStyle = const TextStyle(
@@ -109,24 +112,19 @@ class HomeContentServiceProvider extends StatelessWidget {
                     style: h1style,
                   ),
                 ),
-                const Center(
+                Center(
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Column(
                       children: <Widget>[
                         ActivityCardServiceProvider(
-                          date: "2024-02-20",
-                          timeSlot: "Morning Slot",
-                          customerName: "Mr Thayanan",
-                          paddyLandAddress: "10th lake Pandiyankulam",
-                          customerPhoneNumber: "0777123456",
-                        ),
-                        ActivityCardServiceProvider(
-                          date: "2024-02-20",
-                          timeSlot: "Morning Slot",
-                          customerName: "Mr Thayanan",
-                          paddyLandAddress: "10th lake Pandiyankulam",
-                          customerPhoneNumber: "0777123456",
+                          dayController: dayController,
+                          timeSlotController: timeSlotController,
+                          customerNameController: customerNameController,
+                          paddyLandAddressController:
+                              paddyLandAddressController,
+                          customerPhoneNumberController:
+                              customerPhoneNumberController,
                         ),
                       ],
                     ),
@@ -171,9 +169,9 @@ class HomeContentServiceProvider extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(
-                              color: Colors.grey), // Add border color
-                          borderRadius:
-                              BorderRadius.circular(5), // Add border radius
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                         margin: const EdgeInsets.only(right: 8),
                       ),
@@ -185,9 +183,9 @@ class HomeContentServiceProvider extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.green,
                           border: Border.all(
-                              color: Colors.grey), // Add border color
-                          borderRadius:
-                              BorderRadius.circular(5), // Add border radius
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                         margin: const EdgeInsets.only(right: 8),
                       ),
@@ -200,8 +198,9 @@ class HomeContentServiceProvider extends StatelessWidget {
                   child: Center(
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(10)),
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       width: width * 0.4,
                       height: width * 0.1,
                       child: TextButton(
@@ -209,7 +208,7 @@ class HomeContentServiceProvider extends StatelessWidget {
                         child: const Text(
                           "Confirm",
                           style: TextStyle(
-                            color: Colors.white, // Set the text color to white
+                            color: Colors.white,
                           ),
                         ),
                       ),
