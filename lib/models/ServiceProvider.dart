@@ -6,7 +6,7 @@ class ServiceProvider {
   final String phoneNumber;
   final String nicNo;
   final String harvesterType;
-  final String ratePerAcre;
+  final double ratePerAcre;
   final String harvestingArea;
 
   const ServiceProvider({

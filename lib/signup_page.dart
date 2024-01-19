@@ -29,7 +29,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final phoneNumberController = TextEditingController(text: "+94712345678");
   final nicNoController = TextEditingController(text: "200000000V");
   final harvesterTypeController = TextEditingController(text: "Kubota 70G+");
-  final ratePerAcreController = TextEditingController(text: "LKR 15000");
+  final ratePerAcreController = TextEditingController(text: "20000");
   final harvestingAreaController = TextEditingController(text: "Hapugala");
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -110,7 +110,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           phoneNumber: phoneNumber,
           nicNo: nicNo,
           harvesterType: harvesterTypeController.text,
-          ratePerAcre: ratePerAcreController.text,
+          ratePerAcre: double.tryParse(ratePerAcreController.text) ?? 20000.0,
           harvestingArea: harvestingAreaController.text,
         );
 

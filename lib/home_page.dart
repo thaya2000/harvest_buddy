@@ -1,14 +1,15 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/account_page.dart';
 import 'package:harvest_buddy/activity_page.dart';
 import 'package:harvest_buddy/schedule_page.dart';
 import 'package:harvest_buddy/search_harvester_page.dart';
+import 'package:harvest_buddy/utils/collection_data_retriever.dart';
 import 'package:harvest_buddy/widgets/high_rated_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -54,12 +55,48 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class HomePageContent extends StatelessWidget {
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController locationController = TextEditingController();
-  DateTime? selectedDate;
-
+class HomePageContent extends StatefulWidget {
   HomePageContent({super.key});
+
+  @override
+  State<HomePageContent> createState() => _HomePageContentState();
+}
+
+class _HomePageContentState extends State<HomePageContent> {
+  final CollectionDataRetrieverHelper _collectionDataRetrieverHelper =
+      CollectionDataRetrieverHelper();
+
+  bool isServiceProvider = false;
+  final user = FirebaseAuth.instance.currentUser!;
+
+  late Map<String, dynamic> _userData;
+  late Map<String, dynamic> _farmerData;
+  late String _fullName = "";
+
+  @override
+  void initState() {
+    super.initState();
+    fetchProfileData();
+  }
+
+  Future<void> fetchProfileData() async {
+    _userData = await _collectionDataRetrieverHelper.fetchCollectionData(
+        "users", user.uid);
+    isServiceProvider = _userData['isServiceProvider'];
+    if (!isServiceProvider) {
+      _farmerData = await _collectionDataRetrieverHelper.fetchCollectionData(
+          "farmers", user.uid);
+      setState(() {
+        _fullName = _farmerData['firstName'] + " " + _farmerData['lastName'];
+      });
+    }
+  }
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  TextEditingController locationController = TextEditingController();
+
+  DateTime? selectedDate;
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +130,7 @@ class HomePageContent extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 30, top: 50),
                 child: Text(
-                  "Welcome Thayanan!",
+                  "Welcome $_fullName",
                   style: appNameStyle,
                 ),
               ),

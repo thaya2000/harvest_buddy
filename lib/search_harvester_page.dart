@@ -33,44 +33,65 @@ class _HomePageState extends State<SearchHarvester> {
         child: Center(
           child: Column(
             children: <Widget>[
-              Container(
-                width: width * 0.6,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 227, 227, 227),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                margin: const EdgeInsets.all(25),
-                padding: const EdgeInsets.all(10),
-                child: const Center(child: Text("Harvesters found")),
-              ),
+              // Container(
+              //   width: width * 0.6,
+              //   decoration: BoxDecoration(
+              //     color: const Color.fromARGB(255, 227, 227, 227),
+              //     borderRadius: BorderRadius.circular(10.0),
+              //   ),
+              //   margin: const EdgeInsets.all(25),
+              //   padding: const EdgeInsets.all(10),
+              //   child: const Center(child: Text("Harvesters found")),
+              // ),
               StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
-                    .collection('serviceproviders')
+                    .collection('serviceProviders')
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   }
 
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    return Text("No service providers available");
+                    return const Text("No service providers available");
                   }
 
+                  List<Map<String, dynamic>> harvestersData =
+                      snapshot.data!.docs.map((document) {
+                    return document.data() as Map<String, dynamic>;
+                  }).toList();
+
+                  int numberOfHarvesters = harvestersData.length;
+
                   return Column(
-                    children: snapshot.data!.docs.map((document) {
-                      var data = document.data() as Map<String, dynamic>;
-
-                      print("data: $data");
-
-                      return BookingCard(
-                        serviceProviderName: data['serviceProviderName'],
-                        harvesterType: data['harvesterType'],
-                        availableSlots:
-                            List<String>.from(data['availableSlots']),
-                        rating: data['rating'].toDouble(),
-                        ratePerAcre: data['ratePerAcre'].toDouble(),
-                      );
-                    }).toList(),
+                    children: <Widget>[
+                      Container(
+                        width: width * 0.6,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 227, 227, 227),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        margin: const EdgeInsets.all(25),
+                        padding: const EdgeInsets.all(10),
+                        child: Center(
+                            child:
+                                Text("$numberOfHarvesters Harvesters found")),
+                      ),
+                      Column(
+                        children: harvestersData.map((data) {
+                          print("data: $data");
+                          return BookingCard(
+                            serviceProviderName: data['firstName'] ?? '',
+                            harvesterType: data['harvesterType'] ?? '',
+                            availableSlots: List<String>.from(
+                                data['availableSlots'] ??
+                                    ["Morning Slot", "Evening Slot"]),
+                            rating: (data['rating'] as num?)?.toDouble() ?? 5.0,
+                            ratePerAcre: (data['ratePerAcre']) ?? 16000.00,
+                          );
+                        }).toList(),
+                      ),
+                    ],
                   );
                 },
               ),

@@ -71,7 +71,7 @@ class _EditAccountState extends State<EditAccount> {
           _harvestTypeController.text =
               _serviceProviderData['harvesterType'] ?? "";
           _harvestRatePerAcreController.text =
-              _serviceProviderData['ratePerAcre'] ?? "";
+              _serviceProviderData['ratePerAcre']?.toString() ?? "";
           _workingAreaController.text =
               _serviceProviderData['harvestingArea'] ?? "";
         });
@@ -120,7 +120,7 @@ class _EditAccountState extends State<EditAccount> {
           'nicNo': _nicNumberController.text,
           'phoneNumber': _phoneNumberController.text,
           'harvesterType': _harvestTypeController.text,
-          'ratePerAcre': _harvestRatePerAcreController.text,
+          'ratePerAcre': double.parse(_harvestRatePerAcreController.text),
         });
       } else {
         await FirebaseFirestore.instance
