@@ -38,6 +38,7 @@ class _EditAccountState extends State<EditAccount> {
   final _phoneNumberController = TextEditingController();
   final _harvestTypeController = TextEditingController();
   final _harvestRatePerAcreController = TextEditingController();
+  final _workingAreaController = TextEditingController();
 
   @override
   void initState() {
@@ -71,6 +72,8 @@ class _EditAccountState extends State<EditAccount> {
               _serviceProviderData['harvesterType'] ?? "";
           _harvestRatePerAcreController.text =
               _serviceProviderData['ratePerAcre'] ?? "";
+          _workingAreaController.text =
+              _serviceProviderData['harvestingArea'] ?? "";
         });
       } else {
         _farmerData = await _collectionDataRetrieverHelper.fetchCollectionData(
@@ -235,7 +238,12 @@ class _EditAccountState extends State<EditAccount> {
                         if (isServiceProvider)
                           InputText(
                             controller: _harvestRatePerAcreController,
-                            labelText: "Enter Rate Per Acre",
+                            labelText: "Rate Per Acre",
+                          ),
+                        if (isServiceProvider)
+                          InputText(
+                            controller: _workingAreaController,
+                            labelText: "Working Area",
                           ),
                       ],
                     ),
