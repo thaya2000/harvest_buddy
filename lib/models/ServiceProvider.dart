@@ -7,6 +7,7 @@ class ServiceProvider {
   final String nicNo;
   final String harvesterType;
   final String ratePerAcre;
+  final String harvestingArea;
 
   const ServiceProvider({
     required this.userId,
@@ -17,6 +18,7 @@ class ServiceProvider {
     required this.nicNo,
     required this.harvesterType,
     required this.ratePerAcre,
+    required this.harvestingArea,
   });
 
   Map<String, dynamic> toJson() => {
@@ -28,5 +30,6 @@ class ServiceProvider {
         "nicNo": nicNo,
         "harvesterType": harvesterType,
         "ratePerAcre": ratePerAcre,
+        "harvestingArea": harvestingArea,
       };
 }

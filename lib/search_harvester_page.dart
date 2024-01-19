@@ -9,6 +9,16 @@ class SearchHarvester extends StatefulWidget {
 }
 
 class _HomePageState extends State<SearchHarvester> {
+  final String serviceProviderName = "ServiceProvider";
+  final String harvesterType = "ML1151515";
+  final List<String> availableSlots = [
+    "Morning slot",
+    "Afternoon slot",
+    "Evening slot"
+  ];
+  final double rating = 4.5;
+  final double ratePerAcre = 15000;
+
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   int selectedButtonIndex = 0;
 
@@ -76,15 +86,16 @@ class _HomePageState extends State<SearchHarvester> {
                 padding: const EdgeInsets.all(10),
                 child: const Center(child: Text("6 Harvesters found")),
               ),
-              const SingleChildScrollView(
+              SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    BookingCard(),
-                    BookingCard(),
-                    BookingCard(),
-                    BookingCard(),
-                    BookingCard(),
-                    BookingCard(),
+                    BookingCard(
+                      serviceProviderName: serviceProviderName,
+                      harvesterType: harvesterType,
+                      availableSlots: availableSlots,
+                      rating: rating,
+                      ratePerAcre: ratePerAcre,
+                    ),
                   ],
                 ),
               )

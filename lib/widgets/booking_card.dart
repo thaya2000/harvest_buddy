@@ -1,11 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/confirm_booking_page.dart';
 
-class BookingCard extends StatelessWidget {
-  const BookingCard({
-    super.key,
-  });
+class BookingCard extends StatefulWidget {
+  final String serviceProviderName;
+  final String harvesterType;
+  final List<String> availableSlots;
+  final double rating;
+  final double ratePerAcre;
 
+  const BookingCard({
+    required this.serviceProviderName,
+    required this.harvesterType,
+    required this.availableSlots,
+    required this.rating,
+    required this.ratePerAcre,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<BookingCard> createState() => _BookingCardState();
+}
+
+class _BookingCardState extends State<BookingCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,14 +47,16 @@ class BookingCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: const Color.fromARGB(255, 215, 233, 245)),
-                child: const Column(
+                  borderRadius: BorderRadius.circular(20),
+                  color: const Color.fromARGB(255, 215, 233, 245),
+                ),
+                child: Column(
                   children: <Widget>[
-                    Align(
-                        alignment: AlignmentDirectional.centerStart,
-                        child: Text("Service Provider Name")),
-                    Center(child: Text("Vithusan B"))
+                    const Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text("Service Provider Name"),
+                    ),
+                    Center(child: Text(widget.serviceProviderName)),
                   ],
                 ),
               ),
@@ -48,14 +66,16 @@ class BookingCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: const Color.fromARGB(255, 253, 238, 219)),
-                child: const Column(
+                  borderRadius: BorderRadius.circular(20),
+                  color: const Color.fromARGB(255, 253, 238, 219),
+                ),
+                child: Column(
                   children: <Widget>[
-                    Align(
-                        alignment: AlignmentDirectional.centerStart,
-                        child: Text("Harvester Type")),
-                    Center(child: Text("Kubota 70G+")),
+                    const Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text("Harvester Type"),
+                    ),
+                    Center(child: Text(widget.harvesterType)),
                   ],
                 ),
               ),
@@ -65,26 +85,25 @@ class BookingCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: const Color.fromARGB(255, 27, 180, 14)),
-                child: const Column(
+                  borderRadius: BorderRadius.circular(20),
+                  color: const Color.fromARGB(255, 27, 180, 14),
+                ),
+                child: Column(
                   children: <Widget>[
-                    Align(
-                        alignment: AlignmentDirectional.centerStart,
+                    const Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(
+                        "Available Slots",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    for (String slot in widget.availableSlots)
+                      Center(
                         child: Text(
-                          "Availabe Slot",
+                          slot,
                           style: TextStyle(color: Colors.white),
-                        )),
-                    Center(
-                        child: Text(
-                      "Morning Slot",
-                      style: TextStyle(color: Colors.white),
-                    )),
-                    Center(
-                        child: Text(
-                      "Afternoon Slot",
-                      style: TextStyle(color: Colors.white),
-                    )),
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -99,15 +118,17 @@ class BookingCard extends StatelessWidget {
                     width: 120,
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                        border: Border.all(width: 1),
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white),
-                    child: const Column(
+                      border: Border.all(width: 1),
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                    ),
+                    child: Column(
                       children: <Widget>[
-                        Align(
-                            alignment: AlignmentDirectional.centerStart,
-                            child: Text("Rating")),
-                        Center(child: Text("4.5")),
+                        const Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          child: Text("Rating"),
+                        ),
+                        Center(child: Text(widget.rating.toString())),
                       ],
                     ),
                   ),
@@ -119,15 +140,17 @@ class BookingCard extends StatelessWidget {
                     width: 120,
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                        border: Border.all(width: 1),
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white),
-                    child: const Column(
+                      border: Border.all(width: 1),
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                    ),
+                    child: Column(
                       children: <Widget>[
-                        Align(
-                            alignment: AlignmentDirectional.centerStart,
-                            child: Text("Rate Per Acre")),
-                        Center(child: Text("LKR 15000")),
+                        const Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          child: Text("Rate Per Acre"),
+                        ),
+                        Center(child: Text("LKR ${widget.ratePerAcre}")),
                       ],
                     ),
                   ),
@@ -144,7 +167,14 @@ class BookingCard extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const ConfirmBooking()),
+                          builder: (context) => ConfirmBooking(
+                            serviceProviderName: widget.serviceProviderName,
+                            harvesterType: widget.harvesterType,
+                            availableSlots: widget.availableSlots,
+                            rating: widget.rating,
+                            ratePerAcre: widget.ratePerAcre,
+                          ),
+                        ),
                       );
                     },
                     style: ButtonStyle(

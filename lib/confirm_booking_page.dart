@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:harvest_buddy/widgets/time_slot.dart';
 
 class ConfirmBooking extends StatefulWidget {
-  const ConfirmBooking({super.key});
+  const ConfirmBooking(
+      {super.key,
+      required String serviceProviderName,
+      required String harvesterType,
+      required List<String> availableSlots,
+      required double rating,
+      required double ratePerAcre});
 
   @override
   State<ConfirmBooking> createState() => _HomePageState();
