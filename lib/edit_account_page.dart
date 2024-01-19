@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/account_page.dart';
 import 'package:harvest_buddy/constant.dart';
+import 'package:harvest_buddy/home_page.dart';
 import 'package:harvest_buddy/utils/user_profile_helper.dart';
 import 'package:harvest_buddy/utils/collection_data_retriever.dart';
 import 'package:harvest_buddy/widgets/my_textfield.dart';
@@ -121,6 +122,7 @@ class _EditAccountState extends State<EditAccount> {
           'phoneNumber': _phoneNumberController.text,
           'harvesterType': _harvestTypeController.text,
           'ratePerAcre': double.parse(_harvestRatePerAcreController.text),
+          'harvestingArea': _workingAreaController.text,
         });
       } else {
         await FirebaseFirestore.instance
@@ -138,7 +140,7 @@ class _EditAccountState extends State<EditAccount> {
       // ignore: use_build_context_synchronously
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const AccountPage()),
+        MaterialPageRoute(builder: (context) => const HomePage()),
       );
 
       print('Successfully saved');

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 class InputText extends StatelessWidget {
-  final controller;
+  final TextEditingController controller;
   final String labelText;
+  final bool obscureText; // Added for password visibility control
 
   const InputText({
-    super.key,
+    Key? key,
     required this.controller,
     required this.labelText,
-  });
+    this.obscureText = false, // Default to false
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +18,7 @@ class InputText extends StatelessWidget {
       padding: const EdgeInsets.only(left: 15.0, right: 15, bottom: 10),
       child: TextFormField(
         controller: controller,
+        obscureText: obscureText, // Set to true for password fields
         decoration: InputDecoration(
           border: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),

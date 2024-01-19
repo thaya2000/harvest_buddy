@@ -19,18 +19,17 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   bool isChecked = false;
 
-  final emailController = TextEditingController(text: "default1@example.com");
-  final passwordController = TextEditingController(text: "asd123");
-  final confirmPasswordController = TextEditingController(text: "asd123");
-  final firstNameController = TextEditingController(text: "Thaya");
-  final lastNameController = TextEditingController(text: "Theva");
-  final addressController =
-      TextEditingController(text: "N012, Hapugala, Galle.");
-  final phoneNumberController = TextEditingController(text: "+94712345678");
-  final nicNoController = TextEditingController(text: "200000000V");
-  final harvesterTypeController = TextEditingController(text: "Kubota 70G+");
-  final ratePerAcreController = TextEditingController(text: "20000");
-  final harvestingAreaController = TextEditingController(text: "Hapugala");
+  final emailController = TextEditingController(text: "");
+  final passwordController = TextEditingController(text: "");
+  final confirmPasswordController = TextEditingController(text: "");
+  final firstNameController = TextEditingController(text: "");
+  final lastNameController = TextEditingController(text: "");
+  final addressController = TextEditingController(text: "");
+  final phoneNumberController = TextEditingController(text: "");
+  final nicNoController = TextEditingController(text: "");
+  final harvesterTypeController = TextEditingController(text: "");
+  final ratePerAcreController = TextEditingController(text: "");
+  final harvestingAreaController = TextEditingController(text: "");
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -252,10 +251,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       InputText(
                         controller: passwordController,
                         labelText: "Password",
+                        obscureText: true,
                       ),
                       InputText(
                         controller: confirmPasswordController,
                         labelText: "Confirm Password",
+                        obscureText: true,
                       ),
                     ],
                   ),

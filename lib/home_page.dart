@@ -87,7 +87,7 @@ class _HomePageContentState extends State<HomePageContent> {
       _farmerData = await _collectionDataRetrieverHelper.fetchCollectionData(
           "farmers", user.uid);
       setState(() {
-        _fullName = _farmerData['firstName'] + " " + _farmerData['lastName'];
+        _fullName = _farmerData['firstName'];
       });
     }
   }
@@ -130,7 +130,7 @@ class _HomePageContentState extends State<HomePageContent> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 30, top: 50),
                 child: Text(
-                  "Welcome $_fullName",
+                  "Welcome $_fullName !",
                   style: appNameStyle,
                 ),
               ),

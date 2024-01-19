@@ -26,9 +26,8 @@ class _LoginScreenState extends State<LoginScreen> {
   // GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final _emailTextController =
-      TextEditingController(text: "default1@example.com");
-  final _passwordTextController = TextEditingController(text: "asd123");
+  final _emailTextController = TextEditingController(text: "");
+  final _passwordTextController = TextEditingController(text: "");
 
   void signIn() async {
     showDialog(
@@ -158,6 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       InputText(
                         controller: _passwordTextController,
                         labelText: "Password",
+                        obscureText: true,
                       ),
                     ],
                   ),
