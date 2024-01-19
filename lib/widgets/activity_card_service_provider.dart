@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ActivityCardServiceProvider extends StatelessWidget {
-  final TextEditingController dayController;
-  final TextEditingController timeSlotController;
-  final TextEditingController customerNameController;
-  final TextEditingController paddyLandAddressController;
-  final TextEditingController customerPhoneNumberController;
+  final String dayController;
+  final String timeSlotController;
+  final String customerNameController;
+  final String paddyLandAddressController;
+  final String customerPhoneNumberController;
 
   const ActivityCardServiceProvider({
     Key? key,
@@ -54,13 +54,13 @@ class ActivityCardServiceProvider extends StatelessWidget {
           children: <Widget>[
             Center(
               child: Text(
-                dayController.text,
+                dayController,
                 style: h1style,
               ),
             ),
             Center(
               child: Text(
-                timeSlotController.text,
+                timeSlotController,
                 style: h2style,
               ),
             ),
@@ -71,7 +71,7 @@ class ActivityCardServiceProvider extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 80.0, top: 5, bottom: 5),
               child: Text(
-                customerNameController.text,
+                customerNameController,
                 style: h2style,
               ),
             ),
@@ -82,7 +82,7 @@ class ActivityCardServiceProvider extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 80.0, top: 5, bottom: 5),
               child: Text(
-                paddyLandAddressController.text,
+                paddyLandAddressController,
                 style: h2style,
               ),
             ),
@@ -93,7 +93,7 @@ class ActivityCardServiceProvider extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 80.0, top: 5, bottom: 5),
               child: Text(
-                customerPhoneNumberController.text,
+                customerPhoneNumberController,
                 style: h2style,
               ),
             ),

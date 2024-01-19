@@ -51,25 +51,27 @@ class _HomePageState extends State<HomeServiceProvider> {
   }
 }
 
-class HomeContentServiceProvider extends StatelessWidget {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final TextEditingController locationController = TextEditingController();
-  late DateTime? selectedDate;
+class HomeContentServiceProvider extends StatefulWidget {
+  @override
+  State<HomeContentServiceProvider> createState() =>
+      _HomeContentServiceProviderState();
+}
 
-  HomeContentServiceProvider({Key? key}) : super(key: key);
+class _HomeContentServiceProviderState
+    extends State<HomeContentServiceProvider> {
+  final String dayController = "2021-10-10";
+
+  final String timeSlotController = "Morning Slot";
+
+  final String customerNameController = "Vithusan";
+
+  final String paddyLandAddressController = "123, ABC Road, XYZ City";
+
+  final String customerPhoneNumberController = "1234567890";
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-
-    // Create TextEditingController instances
-    TextEditingController dayController = TextEditingController();
-    TextEditingController timeSlotController = TextEditingController();
-    TextEditingController customerNameController = TextEditingController();
-    TextEditingController paddyLandAddressController = TextEditingController();
-    TextEditingController customerPhoneNumberController =
-        TextEditingController();
-    FocusNode dateFocusNode = FocusNode();
 
     // Define text styles
     TextStyle appNameStyle = const TextStyle(
@@ -110,7 +112,7 @@ class HomeContentServiceProvider extends StatelessWidget {
                     style: h1style,
                   ),
                 ),
-                const Center(
+                Center(
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Column(
@@ -124,15 +126,6 @@ class HomeContentServiceProvider extends StatelessWidget {
                           customerPhoneNumberController:
                               customerPhoneNumberController,
                         ),
-                        // ActivityCardServiceProvider(
-                        //   dateController: dateController,
-                        //   timeSlotController: timeSlotController,
-                        //   customerNameController: customerNameController,
-                        //   paddyLandAddressController:
-                        //       paddyLandAddressController,
-                        //   customerPhoneNumberController:
-                        //       customerPhoneNumberController,
-                        // ),
                       ],
                     ),
                   ),
@@ -176,9 +169,9 @@ class HomeContentServiceProvider extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(
-                              color: Colors.grey), // Add border color
-                          borderRadius:
-                              BorderRadius.circular(5), // Add border radius
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                         margin: const EdgeInsets.only(right: 8),
                       ),
@@ -190,9 +183,9 @@ class HomeContentServiceProvider extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.green,
                           border: Border.all(
-                              color: Colors.grey), // Add border color
-                          borderRadius:
-                              BorderRadius.circular(5), // Add border radius
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                         margin: const EdgeInsets.only(right: 8),
                       ),
@@ -205,8 +198,9 @@ class HomeContentServiceProvider extends StatelessWidget {
                   child: Center(
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(10)),
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       width: width * 0.4,
                       height: width * 0.1,
                       child: TextButton(
@@ -214,7 +208,7 @@ class HomeContentServiceProvider extends StatelessWidget {
                         child: const Text(
                           "Confirm",
                           style: TextStyle(
-                            color: Colors.white, // Set the text color to white
+                            color: Colors.white,
                           ),
                         ),
                       ),
