@@ -1,3 +1,5 @@
+// login_page.dart
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,7 @@ import 'package:harvest_buddy/home_service_provider.dart';
 import 'package:harvest_buddy/landing_page.dart';
 import 'package:harvest_buddy/signup_page.dart';
 import 'package:harvest_buddy/widgets/my_textfield.dart';
-// import 'constant.dart';
+import 'models/auth_user.dart'; // Import your AuthUser class
 
 class LoginScreen extends StatefulWidget {
   final Function()? onTap;
@@ -23,11 +25,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection("users");
 
-  // GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final _emailTextController = TextEditingController(text: "");
-  final _passwordTextController = TextEditingController(text: "");
+  final AuthUser authUser = AuthUser();
 
   void signIn() async {
     showDialog(
@@ -39,8 +39,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailTextController.text.trim(),
-        password: _passwordTextController.text.trim(),
+        email: authUser.email ?? "Sample@email.com",
+        password: authUser.password ?? "123456",
       );
 
       final user = FirebaseAuth.instance.currentUser!;
@@ -85,13 +85,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _emailTextController.dispose();
-    _passwordTextController.dispose();
-    super.dispose();
   }
 
   @override
@@ -151,11 +144,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: [
                       InputText(
-                        controller: _emailTextController,
+                        text: authUser.email,
                         labelText: "Email",
                       ),
                       InputText(
-                        controller: _passwordTextController,
+                        text: authUser.password,
                         labelText: "Password",
                         obscureText: true,
                       ),

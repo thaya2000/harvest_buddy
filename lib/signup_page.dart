@@ -1,12 +1,14 @@
+// signup_page.dart
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/landing_page.dart';
 import 'package:harvest_buddy/login_page.dart';
 import 'package:harvest_buddy/widgets/my_textfield.dart';
-import 'models/User.dart' as auth;
+import 'models/auth_user.dart';
 import 'models/farmer.dart';
-import 'models/ServiceProvider.dart';
+import 'models/service_provider.dart'; // Corrected import
 
 class SignUpScreen extends StatefulWidget {
   final Function()? onTap;
@@ -19,20 +21,12 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   bool isChecked = false;
 
-  final emailController = TextEditingController(text: "");
-  final passwordController = TextEditingController(text: "");
-  final confirmPasswordController = TextEditingController(text: "");
-  final firstNameController = TextEditingController(text: "");
-  final lastNameController = TextEditingController(text: "");
-  final addressController = TextEditingController(text: "");
-  final phoneNumberController = TextEditingController(text: "");
-  final nicNoController = TextEditingController(text: "");
-  final harvesterTypeController = TextEditingController(text: "");
-  final ratePerAcreController = TextEditingController(text: "");
-  final harvestingAreaController = TextEditingController(text: "");
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final AuthUser authUser = AuthUser();
+  final Farmer farmer = Farmer();
+  final ServiceProvider serviceProvider = ServiceProvider();
 
   void signUserUp() async {
     showDialog(
@@ -43,29 +37,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
 
     try {
-      if (passwordController.text == confirmPasswordController.text) {
+      if (authUser.password == authUser.confirmPassword) {
         UserCredential userCredential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
+          email: authUser.email ?? "sample@gmail.com",
+          password: authUser.password ?? "123456",
         );
 
-        await addUserDetails(
-            emailController.text,
-            passwordController.text,
-            firstNameController.text,
-            lastNameController.text,
-            addressController.text,
-            phoneNumberController.text,
-            nicNoController.text,
-            userCredential.user?.uid);
+        authUser.userId = userCredential.user?.uid ?? 'defaultUserId';
+
+        await addUserDetails();
 
         Navigator.push(
           scaffoldKey.currentContext!,
           MaterialPageRoute(
-              builder: (context) => LoginScreen(
-                    onTap: () {},
-                  )),
+            builder: (context) => LoginScreen(
+              onTap: () {},
+            ),
+          ),
         );
       } else {
         Navigator.pop(context);
@@ -77,59 +66,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-  Future<void> addUserDetails(
-    String email,
-    String password,
-    String firstName,
-    String lastName,
-    String address,
-    String phoneNumber,
-    String nicNo,
-    String? userId,
-  ) async {
+  Future<void> addUserDetails() async {
     try {
-      auth.User user = auth.User(
-        userId: userId!,
-        password: password,
-        email: email,
-        isServiceProvider: isChecked,
-      );
-
       await FirebaseFirestore.instance
           .collection('users')
-          .doc(userId)
-          .set(user.toJson());
+          .doc(authUser.userId)
+          .set(authUser.toJson());
 
-      if (isChecked) {
-        ServiceProvider serviceProvider = ServiceProvider(
-          userId: userId,
-          firstName: firstName,
-          lastName: lastName,
-          address: address,
-          phoneNumber: phoneNumber,
-          nicNo: nicNo,
-          harvesterType: harvesterTypeController.text,
-          ratePerAcre: double.tryParse(ratePerAcreController.text) ?? 20000.0,
-          harvestingArea: harvestingAreaController.text,
-        );
+      if (authUser.isServiceProvider ?? false) {
+        serviceProvider.userId = authUser.userId;
+        serviceProvider.firstName = authUser.firstName;
+        serviceProvider.lastName = authUser.lastName;
+        serviceProvider.address = authUser.address;
+        serviceProvider.phoneNumber = authUser.phoneNumber;
+        serviceProvider.nicNo = authUser.nicNo;
+        serviceProvider.harvesterType = authUser.harvesterType;
+        serviceProvider.ratePerAcre =
+            double.tryParse(authUser.ratePerAcre ?? "0") ?? 20000.0;
+        serviceProvider.harvestingArea = authUser.harvestingArea;
 
         await FirebaseFirestore.instance
             .collection('serviceProviders')
-            .doc(userId)
+            .doc(authUser.userId)
             .set(serviceProvider.toJson());
       } else {
-        Farmer farmer = Farmer(
-          userId: userId,
-          firstName: firstName,
-          lastName: lastName,
-          address: address,
-          phoneNumber: phoneNumber,
-          nicNo: nicNo,
-        );
+        farmer.userId = authUser.userId;
+        farmer.firstName = authUser.firstName;
+        farmer.lastName = authUser.lastName;
+        farmer.address = authUser.address;
+        farmer.phoneNumber = authUser.phoneNumber;
+        farmer.nicNo = authUser.nicNo;
 
         await FirebaseFirestore.instance
             .collection('farmers')
-            .doc(userId)
+            .doc(authUser.userId)
             .set(farmer.toJson());
       }
 
@@ -169,55 +139,48 @@ class _SignUpScreenState extends State<SignUpScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 30, top: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.arrow_back),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LandingPage()),
-                            );
-                          },
+              Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LandingPage(),
                         ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 35),
-                      child: RichText(
-                        text: const TextSpan(
-                          children: [
-                            TextSpan(
-                              text: "Create",
-                              style: TextStyle(
-                                fontSize: 35.0,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 0, 60, 60),
-                              ),
+                      );
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 35),
+                    child: RichText(
+                      text: const TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "Create",
+                            style: TextStyle(
+                              fontSize: 35.0,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 0, 60, 60),
                             ),
-                            TextSpan(
-                              text: "\n",
+                          ),
+                          TextSpan(
+                            text: "\n",
+                          ),
+                          TextSpan(
+                            text: "account!",
+                            style: TextStyle(
+                              fontSize: 35.0,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 0, 60, 60),
                             ),
-                            TextSpan(
-                              text: "account!",
-                              style: TextStyle(
-                                fontSize: 35.0,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 0, 60, 60),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20),
@@ -225,36 +188,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: Column(
                     children: [
                       InputText(
-                        controller: emailController,
+                        text: authUser.email,
                         labelText: "Username or email",
                       ),
                       InputText(
-                        controller: firstNameController,
+                        text: authUser.firstName,
                         labelText: "First Name",
                       ),
                       InputText(
-                        controller: lastNameController,
+                        text: authUser.lastName,
                         labelText: "Last Name",
                       ),
                       InputText(
-                        controller: addressController,
+                        text: authUser.address,
                         labelText: "Address",
                       ),
                       InputText(
-                        controller: nicNoController,
+                        text: authUser.nicNo,
                         labelText: "Nic Number",
                       ),
                       InputText(
-                        controller: phoneNumberController,
+                        text: authUser.phoneNumber,
                         labelText: "Phone Number",
                       ),
                       InputText(
-                        controller: passwordController,
+                        text: authUser.password,
                         labelText: "Password",
                         obscureText: true,
                       ),
                       InputText(
-                        controller: confirmPasswordController,
+                        text: authUser.confirmPassword,
                         labelText: "Confirm Password",
                         obscureText: true,
                       ),
@@ -283,15 +246,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: Column(
                     children: [
                       InputText(
-                        controller: harvesterTypeController,
+                        text: authUser.harvesterType,
                         labelText: "Harvester Type",
                       ),
                       InputText(
-                        controller: ratePerAcreController,
+                        text: authUser.ratePerAcre,
                         labelText: "Enter Rate Per Acre",
                       ),
                       InputText(
-                        controller: harvestingAreaController,
+                        text: authUser.harvestingArea,
                         labelText: "Harvesting Area",
                       ),
                     ],
