@@ -1,5 +1,4 @@
 // login_page.dart
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -39,8 +38,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: authUser.email ?? "Sample@email.com",
-        password: authUser.password ?? "123456",
+        email: authUser.email ?? "",
+        password: authUser.password ?? "",
       );
 
       final user = FirebaseAuth.instance.currentUser!;
@@ -144,13 +143,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: [
                       InputText(
-                        text: authUser.email,
+                        text: authUser.email = "abc@gmail.com",
                         labelText: "Email",
+                        onChanged: (value) {
+                          authUser.email = value;
+                        },
                       ),
                       InputText(
-                        text: authUser.password,
+                        text: authUser.password = "123456",
                         labelText: "Password",
                         obscureText: true,
+                        onChanged: (value) {
+                          authUser.password = value;
+                        },
                       ),
                     ],
                   ),

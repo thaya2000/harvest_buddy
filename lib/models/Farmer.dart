@@ -6,6 +6,15 @@ class Farmer {
   String? phoneNumber = "";
   String? nicNo = "";
 
+  Farmer({
+    this.userId,
+    this.firstName,
+    this.lastName,
+    this.address,
+    this.phoneNumber,
+    this.nicNo,
+  });
+
   Map<String, dynamic> toJson() => {
         "userId": userId,
         "firstName": firstName,

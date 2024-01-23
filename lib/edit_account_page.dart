@@ -1,12 +1,9 @@
 // edit_account_page.dart
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:harvest_buddy/account_page.dart';
 import 'package:harvest_buddy/constant.dart';
 import 'package:harvest_buddy/home_page.dart';
-import 'package:harvest_buddy/utils/user_profile_helper.dart';
 import 'package:harvest_buddy/utils/collection_data_retriever.dart';
 import 'package:harvest_buddy/widgets/my_textfield.dart';
 import 'models/auth_user.dart'; // Import your AuthUser class

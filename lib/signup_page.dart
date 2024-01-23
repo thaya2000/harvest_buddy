@@ -1,5 +1,4 @@
 // signup_page.dart
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,7 @@ import 'package:harvest_buddy/login_page.dart';
 import 'package:harvest_buddy/widgets/my_textfield.dart';
 import 'models/auth_user.dart';
 import 'models/farmer.dart';
-import 'models/service_provider.dart'; // Corrected import
+import 'models/service_provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   final Function()? onTap;
@@ -20,13 +19,8 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   bool isChecked = false;
-
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
   final AuthUser authUser = AuthUser();
-  final Farmer farmer = Farmer();
-  final ServiceProvider serviceProvider = ServiceProvider();
 
   void signUserUp() async {
     showDialog(
@@ -40,12 +34,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       if (authUser.password == authUser.confirmPassword) {
         UserCredential userCredential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: authUser.email ?? "sample@gmail.com",
+          email: authUser.email ?? "abc@gmail.com",
           password: authUser.password ?? "123456",
         );
 
         authUser.userId = userCredential.user?.uid ?? 'defaultUserId';
-
         await addUserDetails();
 
         Navigator.push(
@@ -73,31 +66,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
           .doc(authUser.userId)
           .set(authUser.toJson());
 
-      if (authUser.isServiceProvider ?? false) {
-        serviceProvider.userId = authUser.userId;
-        serviceProvider.firstName = authUser.firstName;
-        serviceProvider.lastName = authUser.lastName;
-        serviceProvider.address = authUser.address;
-        serviceProvider.phoneNumber = authUser.phoneNumber;
-        serviceProvider.nicNo = authUser.nicNo;
-        serviceProvider.harvesterType = authUser.harvesterType;
-        // serviceProvider.ratePerAcre =
-        //     double.tryParse(authUser.ratePerAcre ?? "0") ?? 20000.0;
-        serviceProvider.ratePerAcre = authUser.ratePerAcre;
-        serviceProvider.harvestingArea = authUser.harvestingArea;
+      print(authUser.toJson());
 
+      if (authUser.isServiceProvider ?? false) {
+        ServiceProvider serviceProvider = authUser.toServiceProvider();
         await FirebaseFirestore.instance
             .collection('serviceProviders')
-            .doc(authUser.userId)
+            .doc(serviceProvider.userId)
             .set(serviceProvider.toJson());
       } else {
-        farmer.userId = authUser.userId;
-        farmer.firstName = authUser.firstName;
-        farmer.lastName = authUser.lastName;
-        farmer.address = authUser.address;
-        farmer.phoneNumber = authUser.phoneNumber;
-        farmer.nicNo = authUser.nicNo;
-
+        Farmer farmer = authUser.toFarmer();
         await FirebaseFirestore.instance
             .collection('farmers')
             .doc(authUser.userId)
@@ -135,7 +113,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Form(
-          key: formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -189,37 +166,45 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: Column(
                     children: [
                       InputText(
-                        text: authUser.email,
+                        text: authUser.email = "abc@gmail.com",
                         labelText: "Username or email",
+                        onChanged: (value) => authUser.email = value,
                       ),
                       InputText(
-                        text: authUser.firstName,
+                        text: authUser.firstName = "Thaya",
                         labelText: "First Name",
+                        onChanged: (value) => authUser.firstName = value,
                       ),
                       InputText(
-                        text: authUser.lastName,
+                        text: authUser.lastName = "Theva",
                         labelText: "Last Name",
+                        onChanged: (value) => authUser.lastName = value,
                       ),
                       InputText(
-                        text: authUser.address,
+                        text: authUser.address = "NO 123, ABC Road, Colombo 05",
                         labelText: "Address",
+                        onChanged: (value) => authUser.address = value,
                       ),
                       InputText(
-                        text: authUser.nicNo,
+                        text: authUser.nicNo = "123456789V",
                         labelText: "Nic Number",
+                        onChanged: (value) => authUser.nicNo = value,
                       ),
                       InputText(
-                        text: authUser.phoneNumber,
+                        text: authUser.phoneNumber = "0712345678",
                         labelText: "Phone Number",
+                        onChanged: (value) => authUser.phoneNumber = value,
                       ),
                       InputText(
-                        text: authUser.password,
+                        text: authUser.password = "123456",
                         labelText: "Password",
+                        onChanged: (value) => authUser.password = value,
                         obscureText: true,
                       ),
                       InputText(
-                        text: authUser.confirmPassword,
+                        text: authUser.confirmPassword = "123456",
                         labelText: "Confirm Password",
+                        onChanged: (value) => authUser.confirmPassword = value,
                         obscureText: true,
                       ),
                     ],

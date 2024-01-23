@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:harvest_buddy/edit_account_page.dart';
@@ -20,7 +21,6 @@ class _LoginScreenState extends State<AccountPage> {
   final CollectionDataRetrieverHelper _collectionDataRetrieverHelper =
       CollectionDataRetrieverHelper();
   final user = FirebaseAuth.instance.currentUser!;
-  // late Future<void> _fetchProfileNameFuture;
   late String profileFullName = "";
 
   @override
@@ -101,14 +101,14 @@ class _LoginScreenState extends State<AccountPage> {
           content: const Text('Are you sure you want to log out?'),
           actions: <Widget>[
             TextButton(
-              onPressed: () async {
-                await FirebaseAuth.instance.signOut();
+              onPressed: () {
                 Navigator.of(context).pop();
               },
               child: const Text('Cancel'),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
                 Navigator.of(context).pop();
                 Navigator.pushReplacement(
                   context,
@@ -125,7 +125,48 @@ class _LoginScreenState extends State<AccountPage> {
 
   Future<void> deleteAccount() async {
     try {
+      final currentUser = FirebaseAuth.instance.currentUser;
+
+      if (currentUser != null) {
+        try {
+          final userDoc = await FirebaseFirestore.instance
+              .collection(
+                  'users') // Replace 'users' with the actual collection name
+              .doc(currentUser.uid)
+              .get();
+
+          if (userDoc.exists) {
+            final isServiceProvider =
+                userDoc.data()?['isServiceProvider'] ?? false;
+
+            if (isServiceProvider) {
+              await FirebaseFirestore.instance
+                  .collection('serviceProviders')
+                  .doc(currentUser.uid)
+                  .delete();
+            } else {
+              await FirebaseFirestore.instance
+                  .collection('farmers')
+                  .doc(currentUser.uid)
+                  .delete();
+            }
+          } else {
+            print('User document does not exist.');
+          }
+
+          await FirebaseFirestore.instance
+              .collection(
+                  'users') // Replace 'users' with the actual collection name
+              .doc(currentUser.uid)
+              .delete();
+        } catch (e) {
+          print('Error fetching user document: $e');
+        }
+      }
+
       await FirebaseAuth.instance.currentUser?.delete();
+      await FirebaseAuth.instance.signOut();
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LandingPage()),

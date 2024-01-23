@@ -26,9 +26,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: true,
@@ -65,13 +62,12 @@ class HomePageContent extends StatefulWidget {
 class _HomePageContentState extends State<HomePageContent> {
   final CollectionDataRetrieverHelper _collectionDataRetrieverHelper =
       CollectionDataRetrieverHelper();
-
   bool isServiceProvider = false;
   final user = FirebaseAuth.instance.currentUser!;
 
   late Map<String, dynamic> _userData;
   late Map<String, dynamic> _farmerData;
-  late String _fullName = "";
+  late dynamic _fullName = "";
 
   @override
   void initState() {
@@ -80,19 +76,22 @@ class _HomePageContentState extends State<HomePageContent> {
   }
 
   Future<void> fetchProfileData() async {
+    print("Fetching profile data : ${user.uid}");
     _userData = await _collectionDataRetrieverHelper.fetchCollectionData(
         "users", user.uid);
+    print("User data : $_userData");
+
     isServiceProvider = _userData['isServiceProvider'];
     if (!isServiceProvider) {
       _farmerData = await _collectionDataRetrieverHelper.fetchCollectionData(
           "farmers", user.uid);
       setState(() {
-        _fullName = _farmerData['firstName'];
+        _fullName = (_farmerData['firstName'] ?? "Thevarasa") +
+            " " +
+            (_farmerData['lastName'] ?? "Thayanan");
       });
     }
   }
-
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   TextEditingController locationController = TextEditingController();
 
@@ -121,7 +120,6 @@ class _HomePageContentState extends State<HomePageContent> {
 
     return SingleChildScrollView(
       child: Form(
-        key: formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -289,7 +287,7 @@ class _HomePageContentState extends State<HomePageContent> {
                         NewWidget(
                             height: height * 0.1,
                             width: width * 0.3,
-                            harvesterName: "Vyshuu Harvesters"),
+                            harvesterName: "kamal Harvesters"),
                         NewWidget(
                             height: height * 0.1,
                             width: width * 0.3,
@@ -330,7 +328,7 @@ class _HomePageContentState extends State<HomePageContent> {
                         NewWidget(
                             height: height * 0.1,
                             width: width * 0.3,
-                            harvesterName: "Vyshuu Harvesters"),
+                            harvesterName: "Kaml Harvesters"),
                         NewWidget(
                             height: height * 0.1,
                             width: width * 0.3,

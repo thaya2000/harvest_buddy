@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 class InputText extends StatelessWidget {
@@ -21,7 +19,7 @@ class InputText extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 15.0, right: 15, bottom: 10),
       child: TextFormField(
-        initialValue: text,
+        initialValue: text.toString(),
         obscureText: obscureText, // Set to true for password fields
         onChanged: onChanged, // Pass the onChanged callback
         decoration: InputDecoration(
