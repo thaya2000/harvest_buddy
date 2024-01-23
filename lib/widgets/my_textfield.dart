@@ -1,10 +1,12 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class InputText extends StatelessWidget {
-  final String? text;
+  final dynamic text;
   final String labelText;
   final bool obscureText; // Added for password visibility control
-  final ValueChanged<String>? onChanged; // New parameter for onChanged
+  final ValueChanged<dynamic>? onChanged; // New parameter for onChanged
 
   const InputText({
     Key? key,

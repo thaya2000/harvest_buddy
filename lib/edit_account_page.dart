@@ -54,8 +54,9 @@ class _EditAccountState extends State<EditAccount> {
             nicNo: serviceProviderData['nicNo'] ?? "",
             phoneNumber: serviceProviderData['phoneNumber'] ?? "",
             harvesterType: serviceProviderData['harvesterType'] ?? "",
-            ratePerAcre:
-                serviceProviderData['ratePerAcre']?.toString() ?? "0.0",
+            // ratePerAcre:
+            //     serviceProviderData['ratePerAcre']?.toString() ?? "0.0",
+            ratePerAcre: serviceProviderData['ratePerAcre'] ?? 0.0,
             harvestingArea: serviceProviderData['harvestingArea'] ?? "",
           );
         });

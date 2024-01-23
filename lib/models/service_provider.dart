@@ -9,6 +9,18 @@ class ServiceProvider {
   double? ratePerAcre = 20000.0;
   String? harvestingArea = "";
 
+  ServiceProvider({
+    this.userId,
+    this.firstName,
+    this.lastName,
+    this.address,
+    this.phoneNumber,
+    this.nicNo,
+    this.harvesterType,
+    this.ratePerAcre,
+    this.harvestingArea,
+  });
+
   Map<String, dynamic> toJson() => {
         "userId": userId,
         "firstName": firstName,

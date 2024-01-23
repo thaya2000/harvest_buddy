@@ -81,8 +81,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         serviceProvider.phoneNumber = authUser.phoneNumber;
         serviceProvider.nicNo = authUser.nicNo;
         serviceProvider.harvesterType = authUser.harvesterType;
-        serviceProvider.ratePerAcre =
-            double.tryParse(authUser.ratePerAcre ?? "0") ?? 20000.0;
+        // serviceProvider.ratePerAcre =
+        //     double.tryParse(authUser.ratePerAcre ?? "0") ?? 20000.0;
+        serviceProvider.ratePerAcre = authUser.ratePerAcre;
         serviceProvider.harvestingArea = authUser.harvestingArea;
 
         await FirebaseFirestore.instance
